@@ -35,5 +35,42 @@
       "signedUpVolunteers":[],
       "maxVolunteers":40
     }
+  ],
+  "volunteers":[
+    {
+      "id":0,
+      "name": "Joe Johnson",
+      "email": "jj@gmail.com",
+      "eventsAttended":0,
+      "upComingEvents":[]
+    },
+    {
+      "id":1,
+      "name": "Pam Otta",
+      "email": "po@gmail.com",
+      "eventsAttended":0,
+      "upComingEvents":[]
+    },
+    {
+      "id":2,
+      "name": "Tom Coughlin",
+      "email": "tc@gmail.com",
+      "eventsAttended":0,
+      "upComingEvents":[]
+    },
+    {
+      "id":3,
+      "name": "Jonathan Lee",
+      "email": "jlee@gmail.com",
+      "eventsAttended":0,
+      "upComingEvents":[]
+    },
+    {
+      "id":4,
+      "name": "Wendy Todd",
+      "email": "wetodd@gmail.com",
+      "eventsAttended":0,
+      "upComingEvents":[]
+    }
   ]
 }

@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Landing from './Landing';
 import AdminDashboard from '../Users/Admin/Dashboard';
+import VolunteerDashboard from '../Users/Volunteers/Dashboard';
 
 const FourOhFour = () => <h1>404</h1>;
 
@@ -16,9 +17,10 @@ const App = () =>
     <Switch>
       <Route exact path="/" component={Landing} />
       <Route path="/admin" component={AdminDashboard} />
+      <Route path="/volunteer" component={VolunteerDashboard} />
     </Switch>
   </BrowserRouter>;
 
 export default App;
 ///YOU GOT REACT ROUTER SETUP - SETUP ALL OTHER PAGE ROUTES NOW WHILE ITS EASY....
-//THEN START ADDING DATA. 
+//THEN START ADDING DATA.

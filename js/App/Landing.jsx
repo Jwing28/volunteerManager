@@ -8,12 +8,12 @@ const Landing = () =>
       <hr />
     </div>
     <div>
-      <Link to="/admin">
+      <button><Link to="/admin">
         Administrators
-      </Link>
-      <button>
+      </Link></button>
+      <button><Link to ="/volunteer">
         Volunteers
-      </button>
+      </Link></button>
     </div>
   </div>;
 
