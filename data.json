@@ -1,0 +1,39 @@
+{
+  "events":[
+    {
+      "id":0,
+      "name":"New Year Wishes Run 5k",
+      "date":"1/1/2018",
+      "signedUpVolunteers":[],
+      "maxVolunteers":10
+    },
+    {
+      "id":1,
+      "name":"Fall Festival",
+      "date":"10/1/2017",
+      "signedUpVolunteers":[],
+      "maxVolunteers":20
+    },
+    {
+      "id":2,
+      "name":"Food Drive 2017",
+      "date":"11/14/2017",
+      "signedUpVolunteers":[],
+      "maxVolunteers":30
+    },
+    {
+      "id":3,
+      "name":"Turkey Run 10k",
+      "date":"11/25/2017",
+      "signedUpVolunteers":[],
+      "maxVolunteers":15
+    },
+    {
+      "id":4,
+      "name":"Fallen Heroes Tribute Concert",
+      "date":"9/11/2017",
+      "signedUpVolunteers":[],
+      "maxVolunteers":40
+    }
+  ]
+}
