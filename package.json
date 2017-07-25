@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "html-webpack-plugin": "^2.29.0",
+    "mongodb": "^2.2.30",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",

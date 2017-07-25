@@ -1,4 +1,4 @@
-{
+[{
   "events":[
     {
       "id":0,
@@ -34,6 +34,13 @@
       "date":"9/11/2017",
       "signedUpVolunteers":[],
       "maxVolunteers":40
+    },
+    {
+      "id":5,
+      "name":"Walk of Fame Marathon",
+      "date":"12/01/2017",
+      "signedUpVolunteers":[],
+      "maxVolunteers":50
     }
   ],
   "volunteers":[
@@ -41,6 +48,7 @@
       "id":0,
       "name": "Joe Johnson",
       "email": "jj@gmail.com",
+      "age": 33,
       "eventsAttended":0,
       "upComingEvents":[]
     },
@@ -48,6 +56,7 @@
       "id":1,
       "name": "Pam Otta",
       "email": "po@gmail.com",
+      "age": 21,
       "eventsAttended":0,
       "upComingEvents":[]
     },
@@ -55,6 +64,7 @@
       "id":2,
       "name": "Tom Coughlin",
       "email": "tc@gmail.com",
+      "age": 40,
       "eventsAttended":0,
       "upComingEvents":[]
     },
@@ -62,6 +72,7 @@
       "id":3,
       "name": "Jonathan Lee",
       "email": "jlee@gmail.com",
+      "age": 31,
       "eventsAttended":0,
       "upComingEvents":[]
     },
@@ -69,8 +80,17 @@
       "id":4,
       "name": "Wendy Todd",
       "email": "wetodd@gmail.com",
+      "age": 50,
+      "eventsAttended":0,
+      "upComingEvents":[]
+    },
+    {
+      "id":5,
+      "name": "Pam Gentry",
+      "email": "pgent@gmail.com",
+      "age": 18,
       "eventsAttended":0,
       "upComingEvents":[]
     }
   ]
-}
+}]
