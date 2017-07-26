@@ -1,7 +1,7 @@
 import React from 'react';
 import preload from '../../../data.json';
 
-const volunteers = preload.volunteers.map(volunteer =>
+const volunteers = preload[0].volunteers.map(volunteer =>
   <li key={volunteer.id}>
     <span>{volunteer.name}</span>
     <span><button>Delete</button></span>

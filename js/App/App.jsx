@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Landing from './Landing';
 import AdminDashboard from '../Users/Admin/Dashboard';
 import VolunteerDashboard from '../Users/Volunteers/Dashboard';
+import NewEvent from '../Users/Admin/NewEvent';
 
 const FourOhFour = () => <h1>404</h1>;
 
@@ -18,6 +19,7 @@ const App = () =>
       <Route exact path="/" component={Landing} />
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/volunteer" component={VolunteerDashboard} />
+      <Route path="/newEvent" component={NewEvent} />      
     </Switch>
   </BrowserRouter>;
 
