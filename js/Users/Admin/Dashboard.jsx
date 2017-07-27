@@ -10,11 +10,20 @@ const events = preload[0].events.map(event =>
     <span><button>Edit</button></span>
   </li>);
 
+const volunteers = preload[0].volunteers.map(volunteer =>
+  <li key={volunteer.id}>
+    <span>{volunteer.name}</span>
+    <span><button>Delete</button></span>
+    <span><button>Edit</button></span>
+  </li>);
+
 const AdminDashboard = () =>
   <div>
     <h1>Administrator Dashboard</h1>
     <h3><Link to="/newEvent">Create New Event</Link></h3>
     <ul>{events}</ul>
+    <h4>Current Volunteers</h4>
+    <ul>{volunteers}</ul>
   </div>;
 
 export default AdminDashboard;
