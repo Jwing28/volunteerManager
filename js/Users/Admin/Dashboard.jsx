@@ -8,14 +8,17 @@ import axios from 'axios';
 class AdminDashboard extends React.Component {
   constructor(props){
     super(props);
-    this.state = { events: [] }
+    this.state = { events: [], volunteers:[] }
   }
 
   componentDidMount() {
+    const getEvents = () => axios.get('http://localhost:3000/events');
+    const getVolunteers = () => axios.get('http://localhost:3000/volunteers');
+
     axios
-      .get('http://localhost:3000/')
-      .then((result)=>{
-        var returnedEvents = result.data.map((event) => {
+      .all([getEvents(),getVolunteers()])
+      .then(axios.spread((events,volunteers) => {
+        var returnedEvents = events.data.map((event) => {
           return (
             <li key={event._id}>
               {'Name: ' +  event.name + ' - ' + event.date + '\n' +
@@ -23,11 +26,20 @@ class AdminDashboard extends React.Component {
             </li>
           );
         });
-        this.setState({events:returnedEvents});
-      })
-      .catch((error)=>{
+
+        var returnedVolunteers = volunteers.data.map((volunteer) => {
+          return (
+            <li key={volunteer._id}>
+              {'Name: ' +  volunteer.name + ' - ' + volunteer.email + volunteer.age + '\n' +
+              '# of Events Attended: ' + volunteer.eventsAttended}
+            </li>
+          );
+        });
+        this.setState({ events:returnedEvents, volunteers:returnedVolunteers });
+      }))
+      .catch((error) => {
         console.log('an error occurred getting data',error);
-      })
+      });
   }
 
   render() {
@@ -41,7 +53,7 @@ class AdminDashboard extends React.Component {
         <h4>Upcoming Events</h4>
         <ul>{this.state.events}</ul>
         <h4>Current Volunteers</h4>
-        <ul>pull volunteers from here</ul>
+        <ul>{this.state.volunteers}</ul>
         <h4>From redux store: {this.props.testing}</h4>
       </div>
     );
