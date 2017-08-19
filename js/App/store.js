@@ -6,16 +6,14 @@ let store = createStore(testRedux);
 
 console.log('in store, line 7', store.getState());
 
-// Every time the state changes, log it
-// Note that subscribe() returns a function for unregistering the listener
+// whenever state changes log it
 let unsubscribe = store.subscribe(() =>
   console.log('inside unsubscribe',store.getState())
 )
 
-store.dispatch(test('stuff'))
+store.dispatch(test('something else'));
 
-
-console.log(test)
+//subscribe returned fn for unregistering the listener
 unsubscribe();
 
 export default store;

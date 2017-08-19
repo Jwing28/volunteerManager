@@ -5,8 +5,13 @@ export const My_Test = 'test';
 export function test(text) {
   return {
     type: My_Test,
-    text
+    payload:text
   };
 }
 
-//export const test = () => ({ type: My_Test, text });
+export function getAPIData(role) {
+  return {
+    type: My_Test,
+    payload:text
+  };
+}
