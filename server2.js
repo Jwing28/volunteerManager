@@ -7,8 +7,6 @@ var MongoClient = require('mongodb').MongoClient,
   f = require('util').format,
   assert = require('assert');
 
-//db.createUser({user:"root", pwd:"123456", roles:["root"]}) - super user
-//https://stackoverflow.com/questions/37372684/mongodb-3-2-authentication-failed
   MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
     // assert.equal(null, err);
     console.log('Connected correctly to server');
@@ -22,8 +20,6 @@ var MongoClient = require('mongodb').MongoClient,
       console.log('result', docs);
     });
   });
-//'mongodb://JonWing:Iwtbag69@localhost:27017/volunteerManager'
-//'mongodb://localhost/nodekb'
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -33,8 +29,6 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res) {
-  // Use connect method to connect to the Server
-  //'mongodb://JonWing:Iwtbag69@cluster0-shard-00-00-a06ft.mongodb.net:27017,cluster0-shard-00-01-a06ft.mongodb.net:27017,cluster0-shard-00-02-a06ft.mongodb.net:27017/volunteerManager?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin'
   MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
     // assert.equal(null, err);
     console.log('Connected correctly to server');
