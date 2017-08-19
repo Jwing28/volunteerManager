@@ -6,10 +6,12 @@ const initialState = {
 
 function testRedux(state = initialState, action) {
   if (action.type === My_Test) {
-    return { testing: 'after dispatch' };
-  } else {
-    return state;
+    return {
+      ...state,
+      testing: action.payload + ' state updated!'
+    }
   }
+  return state;
 }
 
 export default testRedux;
