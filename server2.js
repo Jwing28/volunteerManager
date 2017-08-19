@@ -1,5 +1,4 @@
 const express = require('express');
-// const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
 
@@ -28,7 +27,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get('/', function(req, res) {
+app.get('/events', function(req, res) {
   MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
     // assert.equal(null, err);
     console.log('Connected correctly to server');
@@ -37,10 +36,25 @@ app.get('/', function(req, res) {
     }
 
     var collection = db.collection('events');
+    collection.find().toArray(function(err, events) {
+      console.log('result', events);
+      res.send(events);
+    });
+  });
+});
 
-    collection.find().toArray(function(err, docs) {
-      console.log('result', docs);
-      res.send(docs);
+app.get('/volunteers', function(req, res) {
+  MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
+    // assert.equal(null, err);
+    console.log('Connected correctly to server');
+    if (err) {
+      console.log('error occurred:', err);
+    }
+
+    var collection = db.collection('volunteers');
+    collection.find().toArray(function(err, volunteers) {
+      console.log('result', volunteers);
+      res.send(volunteers);
     });
   });
 });
