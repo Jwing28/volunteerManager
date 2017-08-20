@@ -29,7 +29,6 @@ app.use(function(req, res, next) {
 
 app.get('/events', function(req, res) {
   MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
-    // assert.equal(null, err);
     console.log('Connected correctly to server');
     if (err) {
       console.log('error occurred:', err);
@@ -45,7 +44,6 @@ app.get('/events', function(req, res) {
 
 app.get('/volunteers', function(req, res) {
   MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
-    // assert.equal(null, err);
     console.log('Connected correctly to server');
     if (err) {
       console.log('error occurred:', err);
@@ -58,6 +56,27 @@ app.get('/volunteers', function(req, res) {
     });
   });
 });
+
+// app.post('/newEvent', function(req, res) {
+//   MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
+//     console.log('Connected correctly to server');
+//     if (err) {
+//       console.log('error occurred:', err);
+//     }
+//
+//     var collection = db.collection('events');
+//     //now need to take in request, update db, return success
+//     collection.insertOne({
+//       name: req.body.name,
+//       date: req.body.date,
+//       maxVolunteers: req.body.maxVolunteers
+//     })
+//     .then(function(result) {
+//       // process result
+//       res.send('event successfullly added')//send result?
+//     })
+//   });
+// });
 
 app.listen('3000', function() {
   console.log('listening on 3000');

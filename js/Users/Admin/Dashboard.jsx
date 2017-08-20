@@ -2,17 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getAPIData } from '../../app/actions';
-import axios from 'axios';
 
 class AdminDashboard extends React.Component {
-  constructor(){
-    super();
-    //this.state = { events: [], volunteers:[] }
-  }
-
   componentDidMount() {
     if(!this.props.events) {
-      console.log('before error', this.props)
       this.props.getAPIData('getData');//grab all data and send to render method
     }
   }
@@ -22,7 +15,6 @@ class AdminDashboard extends React.Component {
       return <div>Loading....</div>
     }
 
-    console.log('this.props now has data')
     return(
       <div>
         <h1>Administrator Dashboard</h1>
@@ -43,8 +35,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  //should be passing events & volunteers
-  //these will be the endpoints in your api request!
   getAPIData(dataRequest) {
     dispatch(getAPIData(dataRequest));
   }
