@@ -1,17 +1,22 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import testRedux from './reducers';
-import { test } from './actions';
+import { getAPIData } from './actions';
+import thunkMiddleware from 'redux-thunk';
+//maybe grab logger middleware ? npm..
 
-let store = createStore(testRedux);
-
-console.log('in store, line 7', store.getState());
+const store = createStore(
+  testRedux,
+  applyMiddleware(
+    thunkMiddleware, // lets us dispatch() functions instead of objects
+  )
+);
 
 // whenever state changes log it
 let unsubscribe = store.subscribe(() =>
   console.log('inside unsubscribe',store.getState())
 )
 
-store.dispatch(test('something else'));
+store.dispatch(getAPIData('something else'));
 
 //subscribe returned fn for unregistering the listener
 unsubscribe();

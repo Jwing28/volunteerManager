@@ -1,14 +1,17 @@
 import { My_Test } from './actions';
 
 const initialState = {
-  testing: 'before dispatch'
+  data: ''
 };
 
 function testRedux(state = initialState, action) {
   if (action.type === My_Test) {
+    console.log('state: ', state);
+    console.log('action ', action);
+    console.log({...state,testing:action.payload})
     return {
       ...state,
-      testing: action.payload + ' state updated!'
+      data: action.payload
     }
   }
   return state;
