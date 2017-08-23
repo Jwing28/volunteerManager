@@ -1,5 +1,7 @@
 //action types
 export const My_Test = 'allData';
+export const CREATE_EVENT = 'CREATE_EVENT';
+
 //need axios here
 import axios from 'axios';
 import React from 'react';
@@ -37,4 +39,20 @@ export function getAPIData() {
         console.log('an error occurred getting data',error);
       });
   };
+}
+
+export function postNewEvent() {
+  return (dispatch) => {
+    const postEvent = () => axios.post('http://localhost:3000/events');
+
+    axios
+      .get([postEvent()])
+      .then((result)=> {
+        console.log('you have successfully created a new event', result);
+        dispatch({ type:'CREATE_EVENT', payload:results });
+      })
+      .catch((error)=> {
+        console.log('an error occurred posting event', error);
+      });
+  }
 }
