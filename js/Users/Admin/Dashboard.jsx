@@ -6,7 +6,7 @@ import { getAPIData } from '../../app/actions';
 class AdminDashboard extends React.Component {
   componentDidMount() {
     if(!this.props.events) {
-      this.props.getAPIData('getData');//grab all data and send to render method
+      this.props.getAPIData();//grab all data and send to render method
     }
   }
 
@@ -35,8 +35,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getAPIData(dataRequest) {
-    dispatch(getAPIData(dataRequest));
+  getAPIData() {
+    dispatch(getAPIData());
   }
 });
 

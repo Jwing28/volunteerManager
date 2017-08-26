@@ -1,18 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { postNewEvent } from '../../App/actions';
 
-//NOTES:
-//client & server side form validation ?
 class NewEvent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', date: '', maxVolunteers: '' }
+    this.state = { name: '', date: '', maxVolunteers: 0 }
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleMaxVolunteers = this.handleMaxVolunteers.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  // componentDidMount() {
+  //   if(!this.props.events) {
+  //     this.props.postNewEvent();
+  //   }
+  // }
 
   handleNameChange (e) {
     this.setState({ name: e.target.value });
@@ -23,11 +28,18 @@ class NewEvent extends React.Component {
   }
 
   handleMaxVolunteers(e) {
-    this.setState({ maxVolunteers: this.state.maxVolunteers + 1 });
+    this.setState({ maxVolunteers: e.target.value });
   }
 
   handleSubmit(e) {
     e.preventDefault();
+    var EventData = {
+      name:this.state.name,
+      date:this.state.date,
+      maxVolunteers:this.state.maxVolunteers
+    }
+    this.props.postNewEvent(EventData);
+    // this.props.postNewEvent(EventData);
   }
 
   render() {
@@ -46,27 +58,17 @@ class NewEvent extends React.Component {
     );
   }
 }
-
+//YOUR ISSUE WAS /app.. it should be /App!!!!
 const mapStateToProps = (state) => {
   return {
     data:state.data
   }
 }
-//call dispatch onSubmit
-//this time string you pass should be 'postEvent'
-//this means you need another statement in reducer
+
 const mapDispatchToProps = (dispatch) => ({
-  postNewEvent(dataRequest) {
-    dispatch(getAPIData(dataRequest));
+  postNewEvent(stuff) {
+    dispatch(postNewEvent(stuff));
   }
 });
 
-export default connect(mapStateToProps)(NewEvent);
-
-//onsubmit, component method dispatches ~'newEvent'
-//action creator post request to update mongodb
-//dispatch inside action creator dispatches action with
-//new event you created to reducer
-//need to create new reducer clause
-//return updated state
-//use should receive notification message was success (or not)
+export default connect(mapStateToProps, mapDispatchToProps)(NewEvent);
