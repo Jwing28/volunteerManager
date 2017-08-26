@@ -16,9 +16,13 @@ var MongoClient = require('mongodb').MongoClient,
     var collection = db.collection('volunteers');
 
     collection.find().toArray(function(err, docs) {
-      console.log('result', docs);
+      // console.log('result', docs);
     });
   });
+
+//parse json and url encoding 
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -36,7 +40,7 @@ app.get('/events', function(req, res) {
 
     var collection = db.collection('events');
     collection.find().toArray(function(err, events) {
-      console.log('result', events);
+      // console.log('result', events);
       res.send(events);
     });
   });
@@ -51,47 +55,38 @@ app.get('/volunteers', function(req, res) {
 
     var collection = db.collection('volunteers');
     collection.find().toArray(function(err, volunteers) {
-      console.log('result', volunteers);
+      // console.log('result', volunteers);
       res.send(volunteers);
     });
   });
 });
 
-// app.post('/newEvent', function(req, res) {
-//   MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
-//     console.log('Connected correctly to server');
-//     if (err) {
-//       console.log('error occurred:', err);
-//     }
-//
-//     var collection = db.collection('events');
-//     //now need to take in request, update db, return success
-//     collection.insertOne({
-//       name: req.body.name,
-//       date: req.body.date,
-//       maxVolunteers: req.body.maxVolunteers
-//     })
-//     .then(function(result) {
-//       // process result
-//       res.send('event successfullly added')//send result?
-//     })
-//   });
-// });
+app.post('/events', function(req, res) {
+  console.log('req.body: ', req.body);
+  MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
+    console.log('Connected correctly to server');
+    if (err) {
+      console.log('error occurred:', err);
+    }
+    console.log('post request data', req);
+    var collection = db.collection('events');
+    //now need to take in request, update db, return success
+    collection.insertOne({
+      name: req.body.name,
+      date: req.body.date,
+      maxVolunteers: req.body.maxVolunteers
+    })
+    .then(function(result) {
+      // process result
+      console.log('New Event Saved to MongoDb');
+      res.send('New Event Added.')//send result?
+    })
+  });
+});
 
 app.listen('3000', function() {
   console.log('listening on 3000');
 });
-
-// make minimal api requests
-//onload of '/' grab all of the events and volunteers - obv this is not scalable but for my purposes it's faster
-//make this the initial store of redux
-
-//any changes - create/update/delete
-//can be processed by redux - >
-//update store
-//send update to mongodb
-
-// ---> This way, minimize api calls, user experience is faster because load all the data once
 
 //use rest....learn graphql later..
 //routes:

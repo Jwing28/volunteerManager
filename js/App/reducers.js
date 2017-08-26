@@ -1,15 +1,14 @@
-import { My_Test, CREATE_EVENT } from './actions';
-//mapStateToProps - props.data initially
+import { My_Test, Create_Event } from './actions';
+//mapStateToProps - props.data || this.props.data initially
 const initialState = {data: ''};
-//we update the store here
-//so we have to pass new stuff!
+
 const testRedux = (state = initialState, action) => {
   if (action.type === My_Test) {
     return {
       ...state,
       data: action.payload
     }
-  }else if (action.type === CREATE_EVENT) { //action.payload = new event was made
+  }else if (action.type === Create_Event) { //action.payload = new event was made
     return {
       ...state,
       data: action.payload
