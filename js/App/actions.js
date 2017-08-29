@@ -33,7 +33,7 @@ export function getAPIData() {
         });
         var results = { events: returnedEvents, volunteers: returnedVolunteers };
         // console.log('actions.js results ', results);
-        dispatch({ type:'allData', payload: results });
+        dispatch({ type:My_Test, payload: results });
       }))
       .catch((error) => {
         console.log('an error occurred getting data',error);
@@ -50,7 +50,7 @@ export function postNewEvent(EventInfo) {
       .post('http://localhost:3000/events', EventInfo)
       .then((result)=> {
         console.log('server returned on post: ', result);
-        dispatch({ type:'Create_Event', payload:EventInfo });
+        dispatch({ type:CREATE_EVENT, payload:EventInfo });
       })
       .catch((error)=> {
         console.log('an error occurred posting event', error);

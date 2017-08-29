@@ -5,13 +5,13 @@ import { getAPIData } from '../../app/actions';
 
 class AdminDashboard extends React.Component {
   componentDidMount() {
-    if(!this.props.events) {
+    if(!this.props.events.length) {
       this.props.getAPIData();//grab all data and send to render method
     }
   }
 
   render() { //render method comes before componentDidMount!
-    if(typeof this.props.data === 'string') {
+    if(!this.props.events.length) {
       return <div>Loading....</div>
     }
 
@@ -20,9 +20,9 @@ class AdminDashboard extends React.Component {
         <h1>Administrator Dashboard</h1>
         <h3><Link to="/newEvent">Create New Event</Link></h3>
         <h4>Upcoming Events</h4>
-        <ul>{this.props.data.events}</ul>
+        <ul>{this.props.events}</ul>
         <h4>Current Volunteers</h4>
-        <ul>{this.props.data.volunteers}</ul>
+        <ul>{this.props.volunteers}</ul>
       </div>
     );
   }
@@ -30,7 +30,8 @@ class AdminDashboard extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    data:state.data
+    events:state.events,
+    volunteers: state.volunteers
   }
 }
 
