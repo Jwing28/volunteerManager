@@ -13,12 +13,6 @@ class NewEvent extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  // componentDidMount() {
-  //   if(!this.props.events) {
-  //     this.props.postNewEvent();
-  //   }
-  // }
-
   handleNameChange (e) {
     this.setState({ name: e.target.value });
   }
@@ -32,14 +26,13 @@ class NewEvent extends React.Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault();
+    //e.preventDefault();
     var EventData = {
       name:this.state.name,
       date:this.state.date,
       maxVolunteers:this.state.maxVolunteers
     }
     this.props.postNewEvent(EventData);
-    // this.props.postNewEvent(EventData);
   }
 
   render() {
@@ -53,15 +46,16 @@ class NewEvent extends React.Component {
           <input type="submit" value="Create Event" />
         </form>
         <h3>Admins: Please don't create duplicate events.</h3>
-        <ul>{this.props.data.events}</ul>
+        <ul>{this.props.events}</ul>
       </div>
     );
   }
 }
-//YOUR ISSUE WAS /app.. it should be /App!!!!
+
 const mapStateToProps = (state) => {
   return {
-    data:state.data
+    events:state.events,
+    volunteers: state.volunteers
   }
 }
 
