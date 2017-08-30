@@ -6,16 +6,8 @@ import { Provider } from 'react-redux'
 
 import Landing from './Landing';
 import AdminDashboard from '../Users/Admin/Dashboard';
-// import VolunteerDashboard from '../Users/Volunteers/Dashboard';
+import VolunteerDashboard from '../Users/Volunteers/Dashboard';
 import NewEvent from '../Users/Admin/NewEvent';
-
-const FourOhFour = () => <h1>404</h1>;
-
-/*
-
-      <Route path="/volunteer" component={VolunteerDashboard} />
-
-*/
 
 //include all routes inside switch.
 //landing is the default path , initially where you want to take users to
@@ -26,10 +18,13 @@ const App = () =>
       <Switch>
         <Route exact path="/" component={Landing} />
         <Route path="/admin" component={AdminDashboard} />
+        <Route path="/volunteer" component={VolunteerDashboard} />
         <Route path="/newEvent" component={NewEvent} />
         <Route path="*" component={FourOhFour} />
       </Switch>
     </HashRouter>
-  </Provider>
+  </Provider>;
+
+const FourOhFour = () => <h1>404</h1>;
 
 export default App;

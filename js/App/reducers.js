@@ -10,7 +10,7 @@ const testRedux = (state = initialState, action) => {
       events: action.payload.events,
       volunteers: action.payload.volunteers
     }
-  }else if (action.type === CREATE_EVENT) { //action.payload = new event was made
+  }else if (action.type === CREATE_EVENT) { 
     console.log('inside create event reducer', action.payload);
     console.log('current state inside create event reducer', state);
     return {
