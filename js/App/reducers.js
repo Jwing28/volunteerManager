@@ -1,5 +1,4 @@
-import { My_Test, CREATE_EVENT } from './actions';
-//mapStateToProps - props.data || this.props.data initially
+import { My_Test, CREATE_EVENT, REGISTER_EVENT } from './actions';
 const initialState = {events:[],volunteers:[]};
 
 const testRedux = (state = initialState, action) => {
@@ -10,12 +9,18 @@ const testRedux = (state = initialState, action) => {
       events: action.payload.events,
       volunteers: action.payload.volunteers
     }
-  }else if (action.type === CREATE_EVENT) { 
+  }else if (action.type === CREATE_EVENT) {
     console.log('inside create event reducer', action.payload);
     console.log('current state inside create event reducer', state);
     return {
       ...state,
       events: state.events.concat(action.payload)
+    }
+  } else if (action.type === REGISTER_EVENT) {
+    //we know we are registering as a new volunteer
+    //so we need to update DB & Store
+    return {
+      ...state
     }
   }
   return state;
