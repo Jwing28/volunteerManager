@@ -60,8 +60,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  postNewEvent(stuff) {
-    dispatch(postNewEvent(stuff));
+  postNewEvent(NewEventInfo) {
+    dispatch(postNewEvent(NewEventInfo));
   }
 });
 

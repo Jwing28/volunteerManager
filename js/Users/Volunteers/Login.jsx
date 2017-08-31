@@ -1,10 +1,75 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { existingUser } from '../../App/actions';
 
-const Login = () =>
-  <form>
-    <div><label>Name <input type="text" name="Name" /></label></div>
-    <div><label>Email <input type="text" name="Email"  /></label></div>
-    <input type="submit" value="Login" />
-  </form>;
+class Login extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = { name:'', email:'', valid:false }
 
-export default Login;
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleNameChange(e) {
+    this.setState({ name: e.target.value });
+  }
+
+  handleEmailChange(e) {
+    this.setState({ email: e.target.value });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    var UserData = {
+      name:this.state.name,
+      email:this.state.email
+    };
+
+    //to avoid this code:
+    //need to remove jsx from redux store
+    //only store objects and then render jsx once the data is in the component 
+    var userExist = this.props.volunteers.filter(function(volunteerObj) {
+      var email = volunteerObj.props.children.split(" ")[4];
+      return email.substring(0, email.indexOf('.com') + 4) === UserData.email;
+    });
+
+    if(userExist.length) {
+      console.log('user does exist')
+      this.setState({ valid: !this.state.valid });
+    }
+  }
+
+  render() {
+    return (
+        <form onSubmit={this.handleSubmit}>
+          <div><label>Name: <input type="text" name="Name" value={this.state.name} onChange={this.handleNameChange} /></label></div>
+          <div><label>Email: <input type="text" name="Email"  value={this.state.email} onChange={this.handleEmailChange} /></label></div>
+          <input type="submit" value="Login" />
+          <CheckUser userInfo={this.state} />
+        </form>
+    )
+  }
+}
+
+const CheckUser = (props) => {
+  const validUser = props.userInfo.valid;
+
+  if(validUser) {
+    return <h3>Welcome! {props.userInfo.name} </h3>;
+  }else {
+    return <h3>User was not found. Try again or register as new user.</h3>
+  }
+}
+
+//this way you dont ping the server!
+//you just check if they exist. if so, we will render their info and grab their
+//email and store it in localstorage
+const mapStateToProps = (state) => {
+  return {
+    volunteers: state.volunteers
+  }
+};
+
+export default connect(mapStateToProps)(Login);
