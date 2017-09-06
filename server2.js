@@ -68,8 +68,30 @@ app.post('/events', function(req, res) {
     collection.insertOne({
       name: req.body.name,
       date: req.body.date,
-      currentVolunteers: req.body.currentVolunteers,
+      signedUpVolunteers: req.body.signedUpVolunteers,
       maxVolunteers: req.body.maxVolunteers
+    })
+    .then(function(result) {
+      console.log('New Event Saved to MongoDb');
+      res.send('New Event Added.');
+    })
+  });
+});
+
+app.post('/register', function(req, res) {
+  MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
+    console.log('Connected correctly to server');
+    if (err) {
+      console.log('error occurred:', err);
+    }
+    console.log('post data - register', req);
+    var collection = db.collection('volunteers');
+    collection.insertOne({
+      name: req.body.name,
+      email: req.body.email,
+      age: req.body.age,
+      eventsAttended: 0,
+      futureEvents: []
     })
     .then(function(result) {
       console.log('New Event Saved to MongoDb');

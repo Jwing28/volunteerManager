@@ -1,29 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
-// const Register = () =>
-//   <form>
-//     <div><label>Name: <input type="text" name="Name" /></label></div>
-//     <div><label>Email: <input type="text" name="Email"  /></label></div>
-//     <div><label>Age: <input type="text" name="Age"  /></label></div>
-//     <input type="submit" value="Register" />
-//   </form>;
-//
-// export default Register;
-
+import { createNewVolunteer } from '../../App/actions';
 
 class Register extends React.Component {
   constructor(props){
     super(props);
-    this.state = { name:'', email:'', age: 0, valid:false }
+    this.state = { name:'', email:'', age:0, valid:false }
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handleAgeChange = this.handleAgeChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleNameChange(e) {
     this.setState({ name: e.target.value });
+    //resets message since user is trying again or trying for first time to register
+    if(this.state.valid){
+      this.setState({ valid: !this.state.valid });
+    }
   }
 
   handleEmailChange(e) {
@@ -50,6 +45,8 @@ class Register extends React.Component {
     if(userExist.length) {
       console.log('user does exist')
       this.setState({ valid: !this.state.valid });
+    }else { //user does not exist - save user to database
+      this.props.createNewVolunteer(UserData);
     }
     console.log('now what', this.props.volunteers);
   }
@@ -57,9 +54,9 @@ class Register extends React.Component {
   render() {
     return (
         <form onSubmit={this.handleSubmit}>
-          <div><label>Name: <input type="text" name="Name" value={this.state.name} onChange={this.handleNameChange} /></label></div>
-          <div><label>Email: <input type="text" name="Email"  value={this.state.email} onChange={this.handleEmailChange} /></label></div>
-          <div><label>Age: <input type="text" name="Age" value={this.state.age} onChange={this.handleAgeChange} /></label></div>
+          <div><label>Name: <input type="text" name="Name" value={this.state.name} onChange={this.handleNameChange} required /></label></div>
+          <div><label>Email: <input type="text" name="Email"  value={this.state.email} onChange={this.handleEmailChange} required /></label></div>
+          <div><label>Age: <input type="text" name="Age" value={this.state.age} onChange={this.handleAgeChange} required /></label></div>
           <input type="submit" value="Register" />
           <CheckUser userInfo={this.state} />
         </form>
@@ -73,7 +70,7 @@ const CheckUser = (props) => {
   if(!validUser) {
     return <h3>Welcome! {props.userInfo.name} Please sign up for an event(s). </h3>;
   }else {
-    return <h3>User already exists. Please login or retry.</h3>
+    return <h3>Sorry, {props.userInfo.name}, user already exists. Please login as existing user or retry registering.</h3>
   }
 }
 
@@ -84,8 +81,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  createNewVolunteer() {
-    dispatch(createNewVolunteer());
+  createNewVolunteer(UserInfo) {
+    dispatch(createNewVolunteer(UserInfo));
   }
 });
 

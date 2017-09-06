@@ -48,8 +48,8 @@ class NewEvent extends React.Component {
       <div>
         <div className={"title"}>Create A New Event</div>
         <form className={"newEventContainer"} onSubmit={this.handleSubmit}>
-          <div><label>Name <input type="text" name="Name" value={this.state.name} onChange={this.handleNameChange} /></label></div>
-          <div><label>Date <input type="date" name="Date" value={this.state.date} onChange={this.handleDateChange} /></label></div>
+          <div><label>Name <input type="text" name="Name" value={this.state.name} onChange={this.handleNameChange} required /></label></div>
+          <div><label>Date <input type="date" name="Date" value={this.state.date} onChange={this.handleDateChange} required /></label></div>
           <div><label>Maximum # of Volunteers <input type="text" name="Max Volunteers" value={this.state.maxVolunteers} onChange={this.handleMaxVolunteers}/></label></div>
           <input type="submit" value="Create Event" />
         </form>

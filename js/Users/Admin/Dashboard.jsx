@@ -17,13 +17,13 @@ class AdminDashboard extends React.Component {
       const listEvents = this.props.events.map((event) =>
         <li key={event._id}>
          {'Name: ' +  event.name + ' - ' + event.date + '\n' +
-         'Volunteers: ' + event.signedUpVolunteers + ' / ' + event.maxVolunteers}
+         'Volunteers: ' + event.signedUpVolunteers}
         </li>
       );
-
+      console.log(this.props.events)
       const listVolunteers = this.props.volunteers.map((volunteer) =>
         <li key={volunteer._id}>
-          {'Name: ' +  volunteer.name + ' - ' + volunteer.email + volunteer.age + '\n' +
+          {'Name: ' +  volunteer.name + ' - ' + volunteer.email + " Age: " + volunteer.age + '\n' +
           '# of Events Attended: ' + volunteer.eventsAttended}
         </li>
       );

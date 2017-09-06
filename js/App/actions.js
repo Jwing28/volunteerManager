@@ -41,7 +41,7 @@ export function postNewEvent(EventInfo) {
 }
 
 export function existingUser(ExistingUser) {
-  console.log('inside newUser', ExistingUser);
+  console.log('inside existingUser', ExistingUser);
 
   return(dispatch) => {
     //check if email exists in db
@@ -62,15 +62,15 @@ export function existingUser(ExistingUser) {
   }
 }
 
-export function newUser(NewUser) {
-  console.log('inside newUser', NewUser);
+export function createNewVolunteer(NewUser) {
+  console.log('inside createNewVolunteer', NewUser);
 
   return(dispatch) => {
     //state + store synced = don't have to check user
     //can add user to
 
     axios
-      .post('http://localhost:3000/login', NewUser)
+      .post('http://localhost:3000/register', NewUser)
       .then((result)=> {
         console.log('server returned on get: ', result);
         dispatch({ type:CREATE_VOLUNTEER, payload:NewUser });
