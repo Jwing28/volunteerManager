@@ -1,5 +1,5 @@
 //action types
-export const My_Test = 'allData';
+export const GET_EVENTS = 'allData';
 export const CREATE_EVENT = 'Create_Event';
 export const REGISTER_EVENT = 'Register_Event';
 
@@ -15,26 +15,8 @@ export function getAPIData() {
     axios
       .all([getEvents(),getVolunteers()])
       .then(axios.spread((events,volunteers) => {
-        var returnedEvents = events.data.map((event) => {
-          return (
-            <li key={event._id}>
-              {'Name: ' +  event.name + ' - ' + event.date + '\n' +
-              'Volunteers: ' + event.signedUpVolunteers + ' / ' + event.maxVolunteers}
-            </li>
-          );
-        });
-
-        var returnedVolunteers = volunteers.data.map((volunteer) => {
-          return (
-            <li key={volunteer._id}>
-              {'Name: ' +  volunteer.name + ' - ' + volunteer.email + volunteer.age + '\n' +
-              '# of Events Attended: ' + volunteer.eventsAttended}
-            </li>
-          );
-        });
-        var results = { events: returnedEvents, volunteers: returnedVolunteers };
-        // console.log('actions.js results ', results);
-        dispatch({ type:My_Test, payload: results });
+        var results = { events: events.data, volunteers: volunteers.data };
+        dispatch({ type:GET_EVENTS, payload: results });
       }))
       .catch((error) => {
         console.log('an error occurred getting data',error);
@@ -44,9 +26,7 @@ export function getAPIData() {
 
 export function postNewEvent(EventInfo) {
   console.log('inside actions', EventInfo);
-    // return { type:'IT WORKS', payload: ''}
   return (dispatch) => {
-
     axios
       .post('http://localhost:3000/events', EventInfo)
       .then((result)=> {

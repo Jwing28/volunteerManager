@@ -1,9 +1,9 @@
-import { My_Test, CREATE_EVENT, REGISTER_EVENT } from './actions';
+import { GET_EVENTS, CREATE_EVENT, REGISTER_EVENT } from './actions';
+
 const initialState = {events:[],volunteers:[]};
 
-const testRedux = (state = initialState, action) => {
-  if (action.type === My_Test) {
-    console.log('inside test reducer', action.payload);
+const Reducers = (state = initialState, action) => {
+  if (action.type === GET_EVENTS) {
     return {
       ...state,
       events: action.payload.events,
@@ -26,27 +26,4 @@ const testRedux = (state = initialState, action) => {
   return state;
 }
 
-export default testRedux;
-
-//what kind of reducers do you want?
-//admin
-//create / delete / add event
-//add / remove volunteer from event
-//login / logout from site
-
-//types
-//EventReducer
-//Create_Event
-//Delete_Event
-//Edit_Event
-//VolunteerReducer
-//Add_Volunteer
-//RemoveVolunteer
-//Login/LogoutReducer
-//Login
-//Logout
-
-//volunteer
-//sign up  / remove self from event
-//sign up / unsubscribe as volunteer
-//login / logout from site
+export default Reducers;
