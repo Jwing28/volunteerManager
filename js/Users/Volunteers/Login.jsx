@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { existingUser } from '../../App/actions';
+import { existingUser } from '../../App/actions'; //since state and db are synced don't need this atm.
 
 class Login extends React.Component {
   constructor(props){
@@ -27,18 +27,16 @@ class Login extends React.Component {
       email:this.state.email
     };
 
-    //to avoid this code:
-    //need to remove jsx from redux store
-    //only store objects and then render jsx once the data is in the component 
     var userExist = this.props.volunteers.filter(function(volunteerObj) {
-      var email = volunteerObj.props.children.split(" ")[4];
-      return email.substring(0, email.indexOf('.com') + 4) === UserData.email;
+      var email = volunteerObj.email;
+      return email === UserData.email;
     });
 
     if(userExist.length) {
       console.log('user does exist')
       this.setState({ valid: !this.state.valid });
     }
+    console.log('now what', this.props.volunteers);
   }
 
   render() {

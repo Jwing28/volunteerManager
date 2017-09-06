@@ -2,12 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 
-var MongoClient = require('mongodb').MongoClient,
-  f = require('util').format,
-  assert = require('assert');
+var MongoClient = require('mongodb').MongoClient;
 
   MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
-    // assert.equal(null, err);
     console.log('Connected correctly to server');
     if (err) {
       console.log('error occurred:', err);
@@ -40,7 +37,6 @@ app.get('/events', function(req, res) {
 
     var collection = db.collection('events');
     collection.find().toArray(function(err, events) {
-      // console.log('result', events);
       res.send(events);
     });
   });
@@ -55,7 +51,6 @@ app.get('/volunteers', function(req, res) {
 
     var collection = db.collection('volunteers');
     collection.find().toArray(function(err, volunteers) {
-      // console.log('result', volunteers);
       res.send(volunteers);
     });
   });
@@ -70,7 +65,6 @@ app.post('/events', function(req, res) {
     }
     console.log('post request data', req);
     var collection = db.collection('events');
-    //now need to take in request, update db, return success
     collection.insertOne({
       name: req.body.name,
       date: req.body.date,
@@ -78,9 +72,8 @@ app.post('/events', function(req, res) {
       maxVolunteers: req.body.maxVolunteers
     })
     .then(function(result) {
-      // process result
       console.log('New Event Saved to MongoDb');
-      res.send('New Event Added.')//send result?
+      res.send('New Event Added.');
     })
   });
 });

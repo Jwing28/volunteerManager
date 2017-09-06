@@ -1,4 +1,4 @@
-import { GET_EVENTS, CREATE_EVENT, REGISTER_EVENT } from './actions';
+import { GET_EVENTS, CREATE_EVENT, REGISTER_EVENT, CREATE_VOLUNTEER } from './actions';
 
 const initialState = {events:[],volunteers:[]};
 
@@ -21,6 +21,11 @@ const Reducers = (state = initialState, action) => {
     //so we need to update DB & Store
     return {
       ...state
+    }
+  } else if (action.type === CREATE_VOLUNTEER) {
+    return {
+      ...state,
+      volunteers: state.volunteers.concat(action.payload)
     }
   }
   return state;
