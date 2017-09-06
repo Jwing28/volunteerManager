@@ -42,8 +42,8 @@ class Login extends React.Component {
   render() {
     return (
         <form onSubmit={this.handleSubmit}>
-          <div><label>Name: <input type="text" name="Name" value={this.state.name} onChange={this.handleNameChange} /></label></div>
-          <div><label>Email: <input type="text" name="Email"  value={this.state.email} onChange={this.handleEmailChange} /></label></div>
+          <div><label>Name: <input type="text" name="Name" value={this.state.name} onChange={this.handleNameChange} required /></label></div>
+          <div><label>Email: <input type="text" name="Email"  value={this.state.email} onChange={this.handleEmailChange} required /></label></div>
           <input type="submit" value="Login" />
           <CheckUser userInfo={this.state} />
         </form>
