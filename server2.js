@@ -20,7 +20,7 @@ var MongoClient = require('mongodb').MongoClient,
     });
   });
 
-//parse json and url encoding 
+//parse json and url encoding
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
@@ -74,6 +74,7 @@ app.post('/events', function(req, res) {
     collection.insertOne({
       name: req.body.name,
       date: req.body.date,
+      currentVolunteers: req.body.currentVolunteers,
       maxVolunteers: req.body.maxVolunteers
     })
     .then(function(result) {
@@ -87,33 +88,3 @@ app.post('/events', function(req, res) {
 app.listen('3000', function() {
   console.log('listening on 3000');
 });
-
-//use rest....learn graphql later..
-//routes:
-
-//get
-// '/admin'
-// 'adimn/volunteers'
-// 'admin/events'
-// '/volunteers'
-// 'volunteers/events'
-// 'volunteer/account'
-//post
-// 'admin'
-// '/admin/volunteers'
-// '/admin/events'
-// '/volunteers'
-// '/volunteeers/events'
-//update
-// 'admin'
-// '/admin/volunteers'
-// '/admin/events'
-//delete (put)
-// 'admin'
-// '/admin/volunteers'
-// '/admin/events'
-// 'volunteer'
-// 'volunteer/account'
-
-//admins get - CRUD
-//volunteers get - CRD

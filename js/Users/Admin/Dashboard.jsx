@@ -6,25 +6,39 @@ import { getAPIData } from '../../app/actions';
 class AdminDashboard extends React.Component {
   componentDidMount() {
     if(!this.props.events.length) {
-      this.props.getAPIData();//grab all data and send to render method
+      this.props.getAPIData();
     }
   }
 
   render() { //render method comes before componentDidMount!
-    if(!this.props.events.length) {
+    if(!this.props.events.length || !this.props.volunteers.length) {
       return <div>Loading....</div>
-    }
+    }else {
+      const listEvents = this.props.events.map((event) =>
+        <li key={event._id}>
+         {'Name: ' +  event.name + ' - ' + event.date + '\n' +
+         'Volunteers: ' + event.signedUpVolunteers + ' / ' + event.maxVolunteers}
+        </li>
+      );
 
-    return(
-      <div>
-        <h1>Administrator Dashboard</h1>
-        <h3><Link to="/newEvent">Create New Event</Link></h3>
-        <h4>Upcoming Events</h4>
-        <ul>{this.props.events}</ul>
-        <h4>Current Volunteers</h4>
-        <ul>{this.props.volunteers}</ul>
-      </div>
-    );
+      const listVolunteers = this.props.volunteers.map((volunteer) =>
+        <li key={volunteer._id}>
+          {'Name: ' +  volunteer.name + ' - ' + volunteer.email + volunteer.age + '\n' +
+          '# of Events Attended: ' + volunteer.eventsAttended}
+        </li>
+      );
+
+      return(
+        <div>
+          <h1>Administrator Dashboard</h1>
+          <h3><Link to="/newEvent">Create New Event</Link></h3>
+          <h4>Upcoming Events</h4>
+          <ul>{listEvents}</ul>
+          <h4>Current Volunteers</h4>
+          <ul>{listVolunteers}</ul>
+        </div>
+      );
+    }
   }
 }
 

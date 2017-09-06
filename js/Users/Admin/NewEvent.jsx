@@ -5,7 +5,7 @@ import { postNewEvent } from '../../App/actions';
 class NewEvent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', date: '', maxVolunteers: 0 }
+    this.state = { name: '', date: '', currentVolunteers: 0, maxVolunteers: 0 }
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
@@ -30,12 +30,20 @@ class NewEvent extends React.Component {
     var EventData = {
       name:this.state.name,
       date:this.state.date,
+      currentVolunteers: this.state.currentVolunteers,
       maxVolunteers:this.state.maxVolunteers
     }
     this.props.postNewEvent(EventData);
   }
 
   render() {
+    const listEvents = this.props.events.map((event) =>
+      <li key={event._id}>
+       {'Name: ' +  event.name + ' - ' + event.date + '\n' +
+       'Volunteers: ' + event.currentVolunteers + ' / ' + event.maxVolunteers}
+      </li>
+    );
+
     return(
       <div>
         <div className={"title"}>Create A New Event</div>
@@ -46,7 +54,7 @@ class NewEvent extends React.Component {
           <input type="submit" value="Create Event" />
         </form>
         <h3>Admins: Please don't create duplicate events.</h3>
-        <ul>{this.props.events}</ul>
+        <ul>{listEvents}</ul>
       </div>
     );
   }

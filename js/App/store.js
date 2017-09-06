@@ -1,19 +1,10 @@
 import { createStore, applyMiddleware } from 'redux';
-import testRedux from './reducers';
+import Reducers from './reducers';
 import { getAPIData } from './actions';
 import thunkMiddleware from 'redux-thunk';
-//maybe grab logger middleware ? npm..
-
-// const store = createStore(
-//   testRedux,
-//   +  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-//   applyMiddleware(
-//     thunkMiddleware, // lets us dispatch() functions instead of objects
-//   )
-// );
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(testRedux, composeEnhancers(
+const store = createStore(Reducers, composeEnhancers(
   applyMiddleware(thunkMiddleware)
 ));
 
