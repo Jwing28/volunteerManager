@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { existingUser } from '../../App/actions';
+import { existingUser } from '../../App/actions'; //since state and db are synced don't need this atm.
 
 class Login extends React.Component {
   constructor(props){
