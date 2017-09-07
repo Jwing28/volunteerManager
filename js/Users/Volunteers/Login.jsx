@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { existingUser } from '../../App/actions'; //since state and db are synced don't need this atm.
 
+
 class Login extends React.Component {
   constructor(props){
     super(props);
@@ -33,8 +34,10 @@ class Login extends React.Component {
     });
 
     if(userExist.length) {
-      console.log('user does exist')
+      console.log('user does exist');
       this.setState({ valid: !this.state.valid });
+      //since user exists, lets setup localstorage to act as them being logged in
+      localStorage.setItem('email',UserData.email);
     }
     console.log('now what', this.props.volunteers);
   }

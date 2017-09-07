@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import Register from './Register';
 import Login from './Login';
+import VolunteerSummary from './VolunteerSummary';
 
-//react router v4 injects
-//in v4 routes must be hardcoded, not relative (for now)
+//use this as reference
+//going to need to do something similar on submit for login and register
 const VolunteerDashboard = ({ match }) =>(
   <div>
     <h1>Volunteer Dashboard</h1>
@@ -15,8 +15,12 @@ const VolunteerDashboard = ({ match }) =>(
       <Link to={`${match.url}/login`}>
         Existing Volunteer
       </Link>
+      <Link to={`${match.url}/account`}>
+        Your Account
+      </Link>
       <Route path={`${match.url}/register`} component={Register} />
       <Route path={`${match.url}/login`} component={Login} />
+      <Route path={`${match.url}/account`} component={VolunteerSummary} />
   </div>
 );
 
