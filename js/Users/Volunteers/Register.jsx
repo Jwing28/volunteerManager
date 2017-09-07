@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createNewVolunteer } from '../../App/actions';
+import VolunteerSummary from './VolunteerSummary';
 
 class Register extends React.Component {
   constructor(props){
