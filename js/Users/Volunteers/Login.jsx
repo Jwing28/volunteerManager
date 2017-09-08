@@ -34,22 +34,20 @@ class Login extends React.Component {
     });
 
     if(userExist.length) {
-      console.log('user does exist');
       this.setState({ valid: !this.state.valid });
-      //since user exists, lets setup localstorage to act as them being logged in
-      localStorage.setItem('email',UserData.email);
+      //check if someone is already logged in
+      localStorage.setItem('email',UserData.email); //no one is logged in, ok to login
     }
-    console.log('now what', this.props.volunteers);
   }
 
   render() {
     return (
-        <form onSubmit={this.handleSubmit}>
-          <div><label>Name: <input type="text" name="Name" value={this.state.name} onChange={this.handleNameChange} required /></label></div>
-          <div><label>Email: <input type="text" name="Email"  value={this.state.email} onChange={this.handleEmailChange} required /></label></div>
-          <input type="submit" value="Login" />
-          <CheckUser userInfo={this.state} />
-        </form>
+      <form onSubmit={this.handleSubmit}>
+        <div><label>Name: <input type="text" name="Name" value={this.state.name} onChange={this.handleNameChange} required /></label></div>
+        <div><label>Email: <input type="text" name="Email"  value={this.state.email} onChange={this.handleEmailChange} required /></label></div>
+        <input type="submit" value="Login" />
+        <CheckUser userInfo={this.state} />
+      </form>
     )
   }
 }
@@ -64,9 +62,6 @@ const CheckUser = (props) => {
   }
 }
 
-//this way you dont ping the server!
-//you just check if they exist. if so, we will render their info and grab their
-//email and store it in localstorage
 const mapStateToProps = (state) => {
   return {
     volunteers: state.volunteers

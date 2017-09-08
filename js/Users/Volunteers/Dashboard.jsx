@@ -9,13 +9,13 @@ import VolunteerSummary from './VolunteerSummary';
 const VolunteerDashboard = ({ match }) =>(
   <div>
     <h1>Volunteer Dashboard</h1>
-      <Link to={`${match.url}/register`}>
+      <Link style={volunteerDashStyle} to={`${match.url}/register`}>
         New Volunteer
       </Link>
-      <Link to={`${match.url}/login`}>
+      <Link style={volunteerDashStyle} to={`${match.url}/login`}>
         Existing Volunteer
       </Link>
-      <Link to={`${match.url}/account`}>
+      <Link style={volunteerDashStyle} to={`${match.url}/account`}>
         Your Account
       </Link>
       <Route path={`${match.url}/register`} component={Register} />
@@ -23,5 +23,9 @@ const VolunteerDashboard = ({ match }) =>(
       <Route path={`${match.url}/account`} component={VolunteerSummary} />
   </div>
 );
+
+const volunteerDashStyle = {
+  marginRight: '15px'
+}
 
 export default VolunteerDashboard;
