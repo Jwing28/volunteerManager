@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { postNewEvent } from '../../App/actions';
+import { Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 //should have a logged in as email tag  in upper right corer of page, next to logout btn
 
@@ -17,11 +18,15 @@ class VolunteerSummary extends React.Component {
 
   render() {
     //this should be a scrollable table (of events) next to a large value (of user's data)
+
+    //**you should make the style of this an expression that depends upon percentages and changes color when
+    //almost full!
     const listEvents = this.props.events.map((event) =>
-      <li key={event._id}>
+      <ListGroupItem key={event._id}>
        {'Name: ' +  event.name + ' - ' + event.date + '\n' +
        'Volunteers: ' + event.currentVolunteers + ' / ' + event.maxVolunteers}
-      </li>
+       <Button style={{marginLeft: '10px'}} bsSize="xsmall" bsStyle="success">Sign-Up</Button>
+     </ListGroupItem>
     );
 
     const accountInfo = this.props.volunteers
@@ -37,15 +42,15 @@ class VolunteerSummary extends React.Component {
     console.log(accountInfo);
     return(
       <div>
+        <Button bsStyle="info" onClick={this.handleLogout}>Logout</Button>
         <div className="volunteerInfo">
           <h3>Your Account Info: </h3>
           <div>{accountInfo}</div>
         </div>
         <div className="eventTable">
           <h3>Volunteering Events:</h3>
-          <div>{listEvents}</div>
+          <ListGroup>{listEvents}</ListGroup>
         </div>
-        <button onClick={this.handleLogout}>Logout</button>
       </div>
     );
   }
