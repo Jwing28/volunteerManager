@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getAPIData } from '../../app/actions';
+import { Table } from 'react-bootstrap';
 
 class AdminDashboard extends React.Component {
   componentDidMount() {
@@ -14,28 +15,56 @@ class AdminDashboard extends React.Component {
     if(!this.props.events.length || !this.props.volunteers.length) {
       return <div>Loading....</div>
     }else {
-      const listEvents = this.props.events.map((event) =>
-        <li key={event._id}>
-         {'Name: ' +  event.name + ' - ' + event.date + '\n' +
-         'Volunteers: ' + event.signedUpVolunteers}
-        </li>
-      );
-      console.log(this.props.events)
-      const listVolunteers = this.props.volunteers.map((volunteer) =>
-        <li key={volunteer._id}>
-          {'Name: ' +  volunteer.name + ' - ' + volunteer.email + " Age: " + volunteer.age + '\n' +
-          '# of Events Attended: ' + volunteer.eventsAttended}
-        </li>
+      const listEvents = this.props.events.map((event, index) =>
+        <tr key={event._id}>
+          <td>{index + 1}</td>        
+          <td>{event.name}</td>
+          <td>{event.date}</td>
+        </tr>
       );
 
-      return(
+      const listVolunteers = this.props.volunteers.map((volunteer, index) =>
+        <tr key={event._id}>
+          <td>{index + 1}</td>        
+          <td>{volunteer.name}</td>
+          <td>{volunteer.email}</td>
+          <td>{volunteer.age}</td>
+          <td>{volunteer.eventsAttended}</td>
+        </tr>        
+      );
+
+      return (
         <div>
           <h1>Administrator Dashboard</h1>
           <h3><Link to="/newEvent">Create New Event</Link></h3>
           <h4>Upcoming Events</h4>
-          <ul>{listEvents}</ul>
+          <Table striped bordered condensed hover responsive>
+            <tHead>
+            <tr>
+              <th>#</th>
+              <th>Event Name</th>
+              <th>Date</th> 
+            </tr>           
+            </tHead>
+            <tbody>
+              {listEvents}
+            </tbody>
+          </Table>
           <h4>Current Volunteers</h4>
-          <ul>{listVolunteers}</ul>
+          <Table striped bordered condensed hover responsive>
+            <tHead>
+            <tr>
+              <th>#</th>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Age</th>
+              <th>Events Attended</th>  
+            </tr>          
+            </tHead>
+            <tbody>
+              {listVolunteers}
+            </tbody>
+          </Table>
         </div>
       );
     }
