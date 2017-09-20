@@ -1,4 +1,4 @@
-import { GET_EVENTS, CREATE_EVENT, REGISTER_EVENT, CREATE_VOLUNTEER } from './actions';
+import { GET_EVENTS, CREATE_EVENT, REGISTER_EVENT, CREATE_VOLUNTEER, DELETE_EVENT } from './actions';
 
 const initialState = {events:[],volunteers:[]};
 
@@ -26,6 +26,11 @@ const Reducers = (state = initialState, action) => {
     return {
       ...state,
       volunteers: state.volunteers.concat(action.payload)
+    }
+  } else if (action.type === DELETE_EVENT) {
+    return { 
+      ...state,
+      events: state.events.filter((Event) => Event._id !== action.payload)
     }
   }
   return state;

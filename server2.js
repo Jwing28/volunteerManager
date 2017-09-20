@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 
-var MongoClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient;
+const ObjectID = require('mongodb').ObjectID;
 
   MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
     console.log('Connected correctly to server');
@@ -17,8 +18,6 @@ var MongoClient = require('mongodb').MongoClient;
     });
   });
 
-//parse json and url encoding
-app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
@@ -96,6 +95,25 @@ app.post('/register', function(req, res) {
     .then(function(result) {
       console.log('New Event Saved to MongoDb');
       res.send('New Event Added.');
+    })
+  });
+});
+
+//the end of the path is interactable via req.params.whatever end of path is!
+app.delete('/events/:id', function(req,res) {
+  MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
+    console.log('Connected correctly to server');
+    if (err) {
+      console.log('error occurred:', err);
+    }
+
+    var collection = db.collection('events');
+    collection.deleteOne({
+      "_id" : ObjectID(req.params.id)
+    })
+    .then(function(result) {
+      console.log('Event removed from MongoDb', result);
+      res.send('Event Removed.');
     })
   });
 });
