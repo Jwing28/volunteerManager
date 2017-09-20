@@ -49,7 +49,6 @@ class Register extends React.Component {
     }else { //user does not exist - save user to database
       this.props.createNewVolunteer(UserData);
     }
-    console.log('now what', this.props.volunteers);
   }
 
   render() {
