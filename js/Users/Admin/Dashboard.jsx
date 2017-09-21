@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getAPIData } from '../../App/actions';
 import { deleteEvent } from '../../App/actions';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, OverlayTrigger } from 'react-bootstrap';
+import { Tooltip as TooltipBS }  from 'react-bootstrap';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 // import '../../../css/users/admin.css';
 
@@ -30,12 +31,15 @@ class AdminDashboard extends React.Component {
     this.props.deleteEvent(eventId);
   }
 
-  //**search as you type and infinite scroll - 
-
   render() { //render method comes before componentDidMount!
     if(!this.props.events.length || !this.props.volunteers.length) {
       return <div>Loading....</div>
     } else {
+
+      const tooltipBootStrap = (
+        <TooltipBS id="tooltip">Are you sure?</TooltipBS>
+      );      
+
       const listEvents = this.props.events
       .sort((currentEvent,nextEvent) =>
         currentEvent.name.split("")[0] > nextEvent.name.split("")[0]
@@ -45,7 +49,11 @@ class AdminDashboard extends React.Component {
           <td>{index + 1}</td>        
           <td>{event.name}</td>
           <td>{event.date}</td>
-          <td><Button bsStyle="danger" onClick={() => this.handleRemoveEvent(event._id)}>Delete</Button></td>
+          <td>
+          <OverlayTrigger placement="right" overlay={tooltipBootStrap}>
+            <Button bsStyle="danger" onClick={() => this.handleRemoveEvent(event._id)}>Delete</Button>
+          </OverlayTrigger>
+          </td>
         </tr>
       );
 
@@ -57,7 +65,11 @@ class AdminDashboard extends React.Component {
           <td>{volunteer.email}</td>
           <td>{volunteer.age}</td>
           <td>{volunteer.eventsAttended}</td>
-          <td><Button bsStyle="danger">Remove</Button></td>
+          <td>
+            <OverlayTrigger placement="right" overlay={tooltipBootStrap}>
+              <Button bsStyle="danger">Remove</Button>
+            </OverlayTrigger>          
+          </td>
         </tr>        
       );
 
