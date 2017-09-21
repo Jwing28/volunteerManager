@@ -7,6 +7,7 @@ export const CREATE_EVENT = 'Create_Event';
 export const REGISTER_EVENT = 'Register_Event';
 export const CREATE_VOLUNTEER = 'Create_Volunteer';
 export const DELETE_EVENT = 'Delete_Event';
+export const DELETE_VOLUNTEER = 'Delete_Volunteer';
 
 export const getAPIData = () =>  {
   return (dispatch) => {
@@ -75,11 +76,25 @@ export const deleteEvent = (EventId) => {
     axios
       .delete(`http://localhost:3000/events/${EventId}`)
       .then((result) => {
-        console.log('user removed: ', result);
+        console.log('event removed: ', result);
         dispatch({type:DELETE_EVENT, payload:EventId});
       })
       .catch((error) => {
-        console.log('an error occurred deleting user', error);
+        console.log('an error occurred deleting event', error);
       });      
+  }
+}
+
+export const deleteVolunteer = (VolunteerId) => {
+  return(dispatch) => {
+    axios
+      .delete(`http://localhost:3000/volunteers/${VolunteerId}`)
+      .then((result) => {
+        console.log('volunteer removed: ', result);
+        dispatch({type:DELETE_VOLUNTEER, payload:VolunteerId});        
+      })
+      .catch((error) => {
+        console.log('an error occurred deleting volunteer', error);
+      });
   }
 }

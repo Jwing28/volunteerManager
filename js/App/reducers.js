@@ -1,4 +1,4 @@
-import { GET_EVENTS, CREATE_EVENT, REGISTER_EVENT, CREATE_VOLUNTEER, DELETE_EVENT } from './actions';
+import { GET_EVENTS, CREATE_EVENT, REGISTER_EVENT, CREATE_VOLUNTEER, DELETE_EVENT, DELETE_VOLUNTEER } from './actions';
 
 const initialState = {events:[],volunteers:[]};
 
@@ -10,8 +10,6 @@ const Reducers = (state = initialState, action) => {
       volunteers: action.payload.volunteers
     }
   }else if (action.type === CREATE_EVENT) {
-    console.log('inside create event reducer', action.payload);
-    console.log('current state inside create event reducer', state);
     return {
       ...state,
       events: state.events.concat(action.payload)
@@ -31,6 +29,11 @@ const Reducers = (state = initialState, action) => {
     return { 
       ...state,
       events: state.events.filter((Event) => Event._id !== action.payload)
+    }
+  } else if (action.type === DELETE_VOLUNTEER) {
+    return {
+      ...state,
+      volunteers: state.volunteers.filter((Volunteer) => Volunteer._id !== action.payload)      
     }
   }
   return state;

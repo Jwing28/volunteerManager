@@ -5,18 +5,18 @@ const app = express();
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 
-  MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
-    console.log('Connected correctly to server');
-    if (err) {
-      console.log('error occurred:', err);
-    }
+MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
+  console.log('Connected correctly to server');
+  if (err) {
+    console.log('error occurred:', err);
+  }
 
-    var collection = db.collection('volunteers');
+  var collection = db.collection('volunteers');
 
-    collection.find().toArray(function(err, docs) {
-      // console.log('result', docs);
-    });
+  collection.find().toArray(function(err, docs) {
+    console.log('result', docs);
   });
+});
 
 app.use(bodyParser.json());
 
@@ -117,6 +117,25 @@ app.delete('/events/:id', function(req,res) {
     })
   });
 });
+
+app.delete('/volunteers/:id', function(req,res) {
+  MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
+    console.log('Connected correctly to server');
+    if (err) {
+      console.log('error occurred:', err);
+    }
+
+    var collection = db.collection('volunteers');
+    collection.deleteOne({
+      "_id" : ObjectID(req.params.id)
+    })
+    .then(function(result) {
+      console.log('Volunteer removed from MongoDb', result);
+      res.send('Volunteer Removed.');
+    })
+  });
+});
+
 
 app.listen('3000', function() {
   console.log('listening on 3000');

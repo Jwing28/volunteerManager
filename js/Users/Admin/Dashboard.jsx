@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getAPIData } from '../../App/actions';
 import { deleteEvent } from '../../App/actions';
+import { deleteVolunteer } from '../../App/actions';
 import { Table, Button, OverlayTrigger } from 'react-bootstrap';
 import { Tooltip as TooltipBS }  from 'react-bootstrap';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
-// import '../../../css/users/admin.css';
 
 const data = [
       {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
@@ -26,9 +26,11 @@ class AdminDashboard extends React.Component {
   }
 
   handleRemoveEvent(eventId) {
-    //right way
-    //dispatch id
     this.props.deleteEvent(eventId);
+  }
+
+  handleRemoveVolunteer(volunteerId) {
+    this.props.deleteVolunteer(volunteerId);
   }
 
   render() { //render method comes before componentDidMount!
@@ -67,7 +69,7 @@ class AdminDashboard extends React.Component {
           <td>{volunteer.eventsAttended}</td>
           <td>
             <OverlayTrigger placement="right" overlay={tooltipBootStrap}>
-              <Button bsStyle="danger">Remove</Button>
+              <Button bsStyle="danger" onClick={() => this.handleRemoveVolunteer(volunteer._id)}>Delete</Button>
             </OverlayTrigger>          
           </td>
         </tr>        
@@ -138,6 +140,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     deleteEvent:(id) => {
       dispatch(deleteEvent(id));
+    },
+    deleteVolunteer:(id) => {
+      dispatch(deleteVolunteer(id));
     }
   }
 };
