@@ -30,7 +30,7 @@ class NewEvent extends React.Component {
     var EventData = {
       name:this.state.name,
       date:this.state.date,
-      currentVolunteers: this.state.currentVolunteers,
+      currentVolunteers: [],
       maxVolunteers:this.state.maxVolunteers
     }
     this.props.postNewEvent(EventData);
@@ -40,7 +40,7 @@ class NewEvent extends React.Component {
     const listEvents = this.props.events.map((event) =>
       <li key={event._id}>
        {'Name: ' +  event.name + ' - ' + event.date + '\n' +
-       'Volunteers: ' + event.currentVolunteers + ' / ' + event.maxVolunteers}
+       'Volunteers: ' + event.currentVolunteers.length + ' / ' + event.maxVolunteers}
       </li>
     );
 

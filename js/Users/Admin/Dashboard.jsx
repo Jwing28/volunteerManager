@@ -7,6 +7,7 @@ import { deleteVolunteer } from '../../App/actions';
 import { Table, Button, OverlayTrigger } from 'react-bootstrap';
 import { Tooltip as TooltipBS }  from 'react-bootstrap';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
+import EventTable from '../../Components/EventTable';
 
 const data = [
       {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
@@ -34,6 +35,7 @@ class AdminDashboard extends React.Component {
   }
 
   render() { //render method comes before componentDidMount!
+    console.log(this.props.events)
     if(!this.props.events.length || !this.props.volunteers.length) {
       return <div>Loading....</div>
     } else {
@@ -51,6 +53,7 @@ class AdminDashboard extends React.Component {
           <td>{index + 1}</td>        
           <td>{event.name}</td>
           <td>{event.date}</td>
+          <td>{event.currentVolunteers.length + ' / ' + event.maxVolunteers}</td>
           <td>
           <OverlayTrigger placement="right" overlay={tooltipBootStrap}>
             <Button bsStyle="danger" onClick={() => this.handleRemoveEvent(event._id)}>Delete</Button>
@@ -90,20 +93,10 @@ class AdminDashboard extends React.Component {
            <Bar dataKey="pv" fill="#8884d8" />
            <Bar dataKey="uv" fill="#82ca9d" />
           </BarChart>    
+          
           <h4 style={{textAlign:'center'}}>Upcoming Events</h4>
-          <Table striped bordered hover responsive>
-            <tHead>
-            <tr>
-              <th>#</th>
-              <th>Event Name</th>
-              <th>Date</th> 
-              <th>Delete Event</th> 
-            </tr>           
-            </tHead>
-            <tbody>
-              {listEvents}
-            </tbody>
-          </Table>
+          <EventTable data={{action: 'Delete Event', tableData: listEvents}} />
+
           <h4 style={{textAlign:'center'}}>Current Volunteers</h4>
           <Table striped bordered condensed hover responsive>
             <tHead>

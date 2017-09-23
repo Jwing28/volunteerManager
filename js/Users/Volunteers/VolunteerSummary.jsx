@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { postNewEvent } from '../../App/actions';
-import { Button, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
+import EventTable from '../../Components/EventTable';
+import { joinEvent } from '../../App/actions';
 
 //should have a logged in as email tag  in upper right corer of page, next to logout btn
-
 class VolunteerSummary extends React.Component {
   constructor(props) {
     super(props);
-    this.handleLogout = this.handleLogout.bind(this);
   }
 
   handleLogout(e) {
@@ -16,17 +15,44 @@ class VolunteerSummary extends React.Component {
     localStorage.setItem('email','');
   }
 
-  render() {
-    //this should be a scrollable table (of events) next to a large value (of user's data)
+  handleJoinEvent(eventId) {
+    //later: should show user they've joined event somehow
+    //ideally flips or shows button to remove yourself from event!
 
-    //**you should make the style of this an expression that depends upon percentages and changes color when
-    //almost full!
-    const listEvents = this.props.events.map((event) =>
-      <ListGroupItem key={event._id}>
-       {'Name: ' +  event.name + ' - ' + event.date + '\n' +
-       'Volunteers: ' + event.currentVolunteers + ' / ' + event.maxVolunteers}
-       <Button style={{marginLeft: '10px'}} bsSize="xsmall" bsStyle="success">Sign-Up</Button>
-     </ListGroupItem>
+    if(localStorage.getItem('email') !== '') {
+      const userName = this.props.volunteers
+        .filter((volunteer) => volunteer.email === localStorage.getItem('email'))[0].name; 
+
+      const userInfo = {
+        id: eventId,
+        name: userName,
+        email: localStorage.getItem('email')
+      };
+      console.log(this.props);
+
+      this.props.joinEvent(userInfo);    
+      console.log(this.props.events);          
+    }
+  }
+
+  render() {
+    const errorLogin = null;
+    console.log(this.props.events)
+    const listEvents = this.props.events.map((event, index) =>
+      <tr key={event._id}>
+        <td>{index + 1}</td>        
+        <td>{event.name}</td>
+        <td>{event.date}</td>  
+        <td>{event.currentVolunteers.length + ' / ' + event.maxVolunteers}</td>    
+        <Button
+          style={{margin: '10px'}} 
+          bsSize="xsmall" 
+          bsStyle="success"
+          onClick={() => this.handleJoinEvent(event._id)}
+        >
+          Sign-Up
+        </Button>
+      </tr>
     );
 
     const accountInfo = this.props.volunteers
@@ -34,22 +60,22 @@ class VolunteerSummary extends React.Component {
         return volunteer.email === localStorage.getItem('email');
       }).map((volunteer) =>
         <li key={volunteer._id}>
-         {'Name: ' +  volunteer.name + ' Age:' + volunteer.age + '\n' +
+         {'Name: ' +  volunteer.name + ' Age: ' + volunteer.age + '\n' +
          'Events Attended: ' + volunteer.eventsAttended}
         </li>
     );
 
-    console.log(accountInfo);
     return(
       <div>
-        <Button bsStyle="info" onClick={this.handleLogout}>Logout</Button>
+        <Button bsStyle="info" onClick={()=> this.handleLogout}>Logout</Button>
         <div className="volunteerInfo">
           <h3>Your Account Info: </h3>
           <div>{accountInfo}</div>
+          <p style={{color:'red'}}>{localStorage.getItem('email') === '' ? 'No User Logged in.': ''}</p>
         </div>
         <div className="eventTable">
           <h3>Volunteering Events:</h3>
-          <ListGroup>{listEvents}</ListGroup>
+          <EventTable data={{action: 'Join Event', tableData: listEvents}} />
         </div>
       </div>
     );
@@ -63,10 +89,10 @@ const mapStateToProps = (state) => {
   }
 }
 
-// const mapDispatchToProps = (dispatch) => ({
-//   postNewEvent(NewEventInfo) {
-//     dispatch(postNewEvent(NewEventInfo));
-//   }
-// });
+const mapDispatchToProps = (dispatch) => ({
+  joinEvent(VolunteerInfo) {
+    dispatch(joinEvent(VolunteerInfo));
+  }
+});
 
-export default connect(mapStateToProps)(VolunteerSummary);
+export default connect(mapStateToProps, mapDispatchToProps)(VolunteerSummary);
