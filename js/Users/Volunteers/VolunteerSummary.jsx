@@ -15,29 +15,30 @@ class VolunteerSummary extends React.Component {
     localStorage.setItem('email','');
   }
 
-  handleJoinEvent(eventId) {
+  handleJoinEvent(eventId, eventName) {
     //later: should show user they've joined event somehow
     //ideally flips or shows button to remove yourself from event!
 
-    if(localStorage.getItem('email') !== '') {
-      const userName = this.props.volunteers
-        .filter((volunteer) => volunteer.email === localStorage.getItem('email'))[0].name; 
 
-      const userInfo = {
-        id: eventId,
-        name: userName,
+    if(localStorage.getItem('email') !== '') {
+      const userInfo = this.props.volunteers
+        .filter((volunteer) => volunteer.email === localStorage.getItem('email'))[0]; 
+
+      const user = {
+        eventId: eventId,
+        userId: userInfo._id,
+        eventName: eventName,
+        username: userInfo.name,
         email: localStorage.getItem('email')
       };
-      console.log(this.props);
 
-      this.props.joinEvent(userInfo);    
-      console.log(this.props.events);          
+      this.props.joinEvent(user);             
     }
   }
 
   render() {
     const errorLogin = null;
-    console.log(this.props.events)
+    console.log(this.props)
     const listEvents = this.props.events.map((event, index) =>
       <tr key={event._id}>
         <td>{index + 1}</td>        
@@ -48,7 +49,7 @@ class VolunteerSummary extends React.Component {
           style={{margin: '10px'}} 
           bsSize="xsmall" 
           bsStyle="success"
-          onClick={() => this.handleJoinEvent(event._id)}
+          onClick={() => this.handleJoinEvent(event._id, event.name)}
         >
           Sign-Up
         </Button>
@@ -61,7 +62,7 @@ class VolunteerSummary extends React.Component {
       }).map((volunteer) =>
         <li key={volunteer._id}>
          {'Name: ' +  volunteer.name + ' Age: ' + volunteer.age + '\n' +
-         'Events Attended: ' + volunteer.eventsAttended}
+         'Events Attended: ' + volunteer.eventsJoined}
         </li>
     );
 

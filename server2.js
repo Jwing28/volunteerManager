@@ -102,7 +102,7 @@ app.post('/register', function(req, res) {
 
 //filter for event name.
 //update that event's 'currentVolunteers' array with the obj having name and email 
-app.put('/events', function(req,res) {
+app.put('/events/joinEvent', function(req,res) {
   MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
     console.log('Connected correctly to server');
     if (err) {
@@ -111,12 +111,32 @@ app.put('/events', function(req,res) {
 
     var collection = db.collection('events');
     collection.updateOne(
-      { "_id" : req.body.id },
-      { $push: { name: req.body.name, email: req.body.email } }
+      { "_id" : req.body.eventId },
+      { $push: { currentVolunteers: { name: req.body.username, email: req.body.email } }}
     )
     .then(function(result) {
       console.log('User added to Event', result);
-      res.send('Successfully joined.');
+      res.send('User joined event.');
+    })
+  });
+});
+
+app.put('/volunteers/joinEvent', function(req,res) {
+  MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
+    console.log('Connected correctly to server');
+    if (err) {
+      console.log('error occurred:', err);
+    }
+
+    var collection = db.collection('volunteers');
+    collection.updateOne(
+      { "_id" : req.body.userId },
+      { $inc: { eventsJoined: 1 } },
+      { $push: { futureEvents: { name: req.body.eventName } }}
+    )
+    .then(function(result) {
+      console.log('Event added to User', result);
+      res.send('Event added to User.');
     })
   });
 });

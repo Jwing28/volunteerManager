@@ -35,7 +35,9 @@ class Register extends React.Component {
     var UserData = {
       name:this.state.name,
       email:this.state.email,
-      age:this.state.age
+      age:this.state.age,
+      eventsJoined: 0,
+      futureEvents: []      
     };
 
     var userExist = this.props.volunteers.filter(function(volunteerObj) {
