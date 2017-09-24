@@ -36,20 +36,30 @@ const Reducers = (state = initialState, action) => {
       volunteers: state.volunteers.filter((volunteer) => volunteer._id !== action.payload)      
     }
   } else if (action.type === JOIN_EVENT) {
-    
     const updatedEvents = state.events.map((event) => {
-      if(event._id === action.payload.id) {
+      if(event._id === action.payload.eventId) {
         event.currentVolunteers.push(action.payload);
         return event;
       }
       return event;
     });
 
+    const updatedVolunteers = state.volunteers.map((volunteer) => {      
+      if(volunteer.email === action.payload.email) {
+        console.log('volunteers in reducer', volunteer, action.payload.email);
+        volunteer.eventsJoined += 1;
+        volunteer.futureEvents.push(action.payload.eventName);
+        return volunteer;
+      }
+      return volunteer;
+    });
+
     console.log('updatedEvents worked?' , updatedEvents)
 
     return {
       ...state,
-      events: updatedEvents
+      events: updatedEvents,
+      volunteers: updatedVolunteers
     }
   }
   return state;
