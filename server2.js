@@ -108,11 +108,16 @@ app.put('/events/joinEvent', function(req,res) {
     if (err) {
       console.log('error occurred:', err);
     }
+    //works (add and remove) 
+    //db.events.update( {name: "Test Event 3" }, { $push: { currentVolunteers: { name:"Joe Johnson", email: "jj@gmail.com" } }}   )
+    //db.events.update( {name:"Test Event 3" }, { $pull: { "currentVolunteers": { name: "Joe Johnson", email: "jj@gmail.com"  }  }}  )
+
+    //id name and email are all available...
 
     var collection = db.collection('events');
-    collection.updateOne(
-      { "_id" : req.body.eventId },
-      { $push: { currentVolunteers: { name: req.body.username, email: req.body.email } }}
+    collection.update(
+      { name : req.body.eventName },
+      { $push: { currentVolunteers: { name: req.body.username, email: req.body.email }}}
     )
     .then(function(result) {
       console.log('User added to Event', result);
@@ -120,6 +125,21 @@ app.put('/events/joinEvent', function(req,res) {
     })
   });
 });
+
+/*
+db.volunteers.update(
+   { "_id" : req.body.userId },
+   {
+     $inc: { stock: 5 },
+     $set: {
+       item: "ABC123",
+       "info.publisher": "2222",
+       tags: [ "software" ],
+       "ratings.1": { by: "xyz", rating: 3 }
+     }
+   }
+)
+*/
 
 app.put('/volunteers/joinEvent', function(req,res) {
   MongoClient.connect('mongodb://localhost/nodekb', function(err, db) {
@@ -129,10 +149,12 @@ app.put('/volunteers/joinEvent', function(req,res) {
     }
 
     var collection = db.collection('volunteers');
-    collection.updateOne(
-      { "_id" : req.body.userId },
-      { $inc: { eventsJoined: 1 } },
-      { $push: { futureEvents: { name: req.body.eventName } }}
+    collection.update(
+      { name : req.body.eventName },
+      {
+        $inc: { eventsJoined: 1 },
+        $push: { futureEvents: { name: req.body.eventName }}
+      }
     )
     .then(function(result) {
       console.log('Event added to User', result);
