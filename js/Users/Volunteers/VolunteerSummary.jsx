@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Table, Button } from 'react-bootstrap';
-import EventTable from '../../Components/EventTable';
+import EventVolunteerTable from '../../Components/Tables';
 import { joinEvent } from '../../App/actions';
 
 //should have a logged in as email tag  in upper right corer of page, next to logout btn
@@ -76,7 +76,7 @@ class VolunteerSummary extends React.Component {
         </div>
         <div className="eventTable">
           <h3>Volunteering Events:</h3>
-          <EventTable data={{action: 'Join Event', tableData: listEvents}} />
+          <EventVolunteerTable data={{action: 'Join Event', tableData: listEvents}} />
         </div>
       </div>
     );

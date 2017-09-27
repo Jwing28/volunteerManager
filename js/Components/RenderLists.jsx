@@ -1,8 +1,8 @@
 import React from 'react';
-import { Table, Button, OverlayTrigger, Tooltip as TooltipBS } from 'react-bootstrap';
+import { Table, Button, OverlayTrigger, Tooltip} from 'react-bootstrap';
 
 const tooltipBootStrap = (
-  <TooltipBS id="tooltip">Are you sure?</TooltipBS>
+  <Tooltip id="tooltip">Are you sure?</Tooltip>
 );  
 
 export const ListEvents = (props) => (
