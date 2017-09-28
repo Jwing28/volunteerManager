@@ -33,7 +33,7 @@ const EventVolunteerTable = (props) => {
           <th>{props.data.action}</th> 
         </tr>          
         </tHead>
-          <ListVolunteers data={props.data.tableData} />
+          <ListVolunteers data={props.data.tableData} handleRemoveVolunteer={props.handleRemoveVolunteer} />
       </Table> 
     );   
   }  

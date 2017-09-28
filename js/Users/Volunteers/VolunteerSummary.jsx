@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Table, Button } from 'react-bootstrap';
 import EventVolunteerTable from '../../Components/Tables';
 import { joinEvent } from '../../App/actions';
+import Leaderboard from '../../Components/Leaderboard';
 
 //should have a logged in as email tag  in upper right corer of page, next to logout btn
 class VolunteerSummary extends React.Component {
@@ -55,20 +56,23 @@ class VolunteerSummary extends React.Component {
       .filter((volunteer) => {
         return volunteer.email === localStorage.getItem('email');
       }).map((volunteer) =>
-        <li key={volunteer._id}>
+        <div key={volunteer._id}>
          {'Name: ' +  volunteer.name + ' Age: ' + volunteer.age + '\n' +
          'Events Attended: ' + volunteer.eventsJoined}
-        </li>
+        </div>
     );
+
+    const barData = this.props.events.map((event) => ({ name: event.name, joined: event.currentVolunteers.length } ));
 
     return(
       <div>       
-        <Button bsStyle="info" onClick={()=> this.handleLogout}>Logout</Button>
+        <Button style={{float:'right'}} bsStyle="info" onClick={()=> this.handleLogout}>Logout</Button>
         <div className="volunteerInfo">
           <h3>Your Account Info: </h3>
           <div>{accountInfo}</div>
           <p style={{color:'red'}}>{localStorage.getItem('email') === '' ? 'No User Logged in.': ''}</p>
         </div>
+        <Leaderboard barData={barData} /> 
         <div className="eventTable">
           <h3>Volunteering Events:</h3>
           <EventVolunteerTable tableType={'Event'} data={{action: 'Join Event', tableData: listEvents}} />

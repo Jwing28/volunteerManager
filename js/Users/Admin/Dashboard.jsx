@@ -38,9 +38,13 @@ class AdminDashboard extends React.Component {
           <hr />
           <Leaderboard barData={barData} />           
           <h4 style={{textAlign:'center'}}>Upcoming Events</h4>
-          <EventVolunteerTable tableType={'Event'} data={{action: 'Delete Event', tableData: ListEvents(this.props.events)}} />
+          <EventVolunteerTable tableType={'Event'} data={{action: 'Delete Event', tableData: ListEvents(this.props.events, this.handleRemoveEvent.bind(this))}} />
           <h4 style={{textAlign:'center'}}>Current Volunteers</h4>
-          <EventVolunteerTable tableType={'Volunteer'} data={{action: 'Remove Volunteer', tableData: this.props.volunteers}} />
+          <EventVolunteerTable 
+            handleRemoveVolunteer = {this.handleRemoveVolunteer.bind(this)} 
+            tableType={'Volunteer'} 
+            data={{action: 'Remove Volunteer', tableData: this.props.volunteers}} 
+          />
         </div>
       );
     }
