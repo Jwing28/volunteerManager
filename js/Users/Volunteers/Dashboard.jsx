@@ -4,25 +4,12 @@ import Register from './Register';
 import Login from './Login';
 import VolunteerSummary from './VolunteerSummary';
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
+import NavigationBar from '../../Components/NavigationBar';
 
-//use this as reference
-//going to need to do something similar on submit for login and register
 const VolunteerDashboard = ({ match }) =>(
   <div>
-    <Navbar inverse collapseOnSelect>
-      <Navbar.Header>
-        <Navbar.Brand>
-          <a href="#">Volunteer Manager</a>
-        </Navbar.Brand>
-        <Navbar.Toggle />
-      </Navbar.Header>
-      <Navbar.Collapse>
-        <Nav>
-          <NavItem eventKey={1} href="#">About</NavItem>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>   
-    <h1>Volunteer Dashboard</h1>
+    <NavigationBar />  
+    <h1 style={volunteerDashStyle}>Volunteer Dashboard</h1>
       <Link style={volunteerDashStyle} to={`${match.url}/register`}>
         New Volunteer
       </Link>
@@ -39,7 +26,8 @@ const VolunteerDashboard = ({ match }) =>(
 );
 
 const volunteerDashStyle = {
-  marginRight: '15px'
+  marginRight: '15px',
+  textAlign:'center'
 }
 
 export default VolunteerDashboard;

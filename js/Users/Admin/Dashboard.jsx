@@ -7,6 +7,7 @@ import { deleteVolunteer } from '../../App/actions';
 import EventVolunteerTable from '../../Components/Tables';
 import { ListEvents, ListVolunteers } from '../../Components/RenderLists';
 import Leaderboard from '../../Components/Leaderboard';
+import NavigationBar from '../../Components/NavigationBar';
 
 class AdminDashboard extends React.Component {
   componentDidMount() {
@@ -31,6 +32,7 @@ class AdminDashboard extends React.Component {
     } else {
       return (
         <div>
+          <NavigationBar />
           <h1 style={{textAlign:'center'}}>Administrator Dashboard</h1>          
           <h3 style={{textAlign:'center'}}><Link to="/newEvent">Create New Event</Link></h3>
           <hr />
