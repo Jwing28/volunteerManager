@@ -16,10 +16,6 @@ class VolunteerSummary extends React.Component {
   }
 
   handleJoinEvent(eventId, eventName) {
-    //later: should show user they've joined event somehow
-    //ideally flips or shows button to remove yourself from event!
-
-
     if(localStorage.getItem('email') !== '') {
       const userInfo = this.props.volunteers
         .filter((volunteer) => volunteer.email === localStorage.getItem('email'))[0]; 
@@ -38,7 +34,6 @@ class VolunteerSummary extends React.Component {
 
   render() {
     const errorLogin = null;
-    console.log(this.props)
     const listEvents = this.props.events.map((event, index) =>
       <tr key={event._id}>
         <td>{index + 1}</td>        
@@ -67,7 +62,7 @@ class VolunteerSummary extends React.Component {
     );
 
     return(
-      <div>
+      <div>       
         <Button bsStyle="info" onClick={()=> this.handleLogout}>Logout</Button>
         <div className="volunteerInfo">
           <h3>Your Account Info: </h3>
@@ -76,7 +71,7 @@ class VolunteerSummary extends React.Component {
         </div>
         <div className="eventTable">
           <h3>Volunteering Events:</h3>
-          <EventVolunteerTable data={{action: 'Join Event', tableData: listEvents}} />
+          <EventVolunteerTable tableType={'Event'} data={{action: 'Join Event', tableData: listEvents}} />
         </div>
       </div>
     );
