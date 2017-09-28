@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { getAPIData } from '../../App/actions';
 import { deleteEvent } from '../../App/actions';
 import { deleteVolunteer } from '../../App/actions';
-// import { Table, Button, OverlayTrigger, Tooltip as TooltipBS } from 'react-bootstrap';
 import EventVolunteerTable from '../../Components/Tables';
 import { ListEvents, ListVolunteers } from '../../Components/RenderLists';
 import Leaderboard from '../../Components/Leaderboard';
@@ -37,9 +36,9 @@ class AdminDashboard extends React.Component {
           <hr />
           <Leaderboard barData={barData} />           
           <h4 style={{textAlign:'center'}}>Upcoming Events</h4>
-          <EventVolunteerTable type={'Event'} data={{action: 'Delete Event', tableData: ListEvents(this.props.events)}} />
+          <EventVolunteerTable tableType={'Event'} data={{action: 'Delete Event', tableData: ListEvents(this.props.events)}} />
           <h4 style={{textAlign:'center'}}>Current Volunteers</h4>
-          <EventVolunteerTable type={'Volunteer'} data={{action: 'Remove Volunteer', tableData: this.props.volunteers}} />
+          <EventVolunteerTable tableType={'Volunteer'} data={{action: 'Remove Volunteer', tableData: this.props.volunteers}} />
         </div>
       );
     }

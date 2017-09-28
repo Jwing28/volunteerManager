@@ -3,11 +3,25 @@ import { Link, Route } from 'react-router-dom';
 import Register from './Register';
 import Login from './Login';
 import VolunteerSummary from './VolunteerSummary';
+import { Nav, Navbar, NavItem } from 'react-bootstrap';
 
 //use this as reference
 //going to need to do something similar on submit for login and register
 const VolunteerDashboard = ({ match }) =>(
   <div>
+    <Navbar inverse collapseOnSelect>
+      <Navbar.Header>
+        <Navbar.Brand>
+          <a href="#">Volunteer Manager</a>
+        </Navbar.Brand>
+        <Navbar.Toggle />
+      </Navbar.Header>
+      <Navbar.Collapse>
+        <Nav>
+          <NavItem eventKey={1} href="#">About</NavItem>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>   
     <h1>Volunteer Dashboard</h1>
       <Link style={volunteerDashStyle} to={`${match.url}/register`}>
         New Volunteer
@@ -29,3 +43,6 @@ const volunteerDashStyle = {
 }
 
 export default VolunteerDashboard;
+
+
+
