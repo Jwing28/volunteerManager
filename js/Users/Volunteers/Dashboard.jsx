@@ -7,7 +7,7 @@ import { Nav, Navbar, NavItem } from 'react-bootstrap';
 import NavigationBar from '../../Components/NavigationBar';
 
 const VolunteerDashboard = ({ match }) =>(
-  <div>
+  <div style={{textAlign:'center'}}>
     <NavigationBar />  
     <h1 style={volunteerDashStyle}>Volunteer Dashboard</h1>
       <Link style={volunteerDashStyle} to={`${match.url}/register`}>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { getAPIData } from '../../App/actions';
 import { deleteEvent } from '../../App/actions';
 import { deleteVolunteer } from '../../App/actions';
-import EventVolunteerTable from '../../Components/Tables';
+import { RemoveTable } from '../../Components/Tables';
 import { ListEvents, ListVolunteers } from '../../Components/RenderLists';
 import Leaderboard from '../../Components/Leaderboard';
 import NavigationBar from '../../Components/NavigationBar';
@@ -38,9 +38,13 @@ class AdminDashboard extends React.Component {
           <hr />
           <Leaderboard barData={barData} />           
           <h4 style={{textAlign:'center'}}>Upcoming Events</h4>
-          <EventVolunteerTable tableType={'Event'} data={{action: 'Delete Event', tableData: ListEvents(this.props.events)}} />
+          <RemoveTable tableType={'Event'} data={{action: 'Delete Event', tableData: ListEvents(this.props.events, this.handleRemoveEvent.bind(this))}} />
           <h4 style={{textAlign:'center'}}>Current Volunteers</h4>
-          <EventVolunteerTable tableType={'Volunteer'} data={{action: 'Remove Volunteer', tableData: this.props.volunteers}} />
+          <RemoveTable 
+            handleRemoveVolunteer = {this.handleRemoveVolunteer.bind(this)} 
+            tableType={'Volunteer'} 
+            data={{action: 'Remove Volunteer', tableData: this.props.volunteers}} 
+          />
         </div>
       );
     }
