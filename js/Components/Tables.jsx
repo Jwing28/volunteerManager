@@ -2,7 +2,24 @@ import React from 'react';
 import { ListVolunteers } from './RenderLists';
 import { Table } from 'react-bootstrap';
 
-const EventVolunteerTable = (props) => {
+export const JoinTable = (props) => (
+  <Table striped bordered hover responsive>
+    <tHead>
+    <tr>
+      <th>#</th>
+      <th>Event Name</th>
+      <th>Date</th> 
+      <th>Activity Level</th>
+      <th>{props.data.action}</th>       
+    </tr>           
+    </tHead>
+    <tbody>
+      {props.data.tableData}
+    </tbody>
+  </Table>   
+);
+
+export const RemoveTable = (props) => {
   if(props.tableType === 'Event') {
     return (
       <Table striped bordered hover responsive>
@@ -38,5 +55,3 @@ const EventVolunteerTable = (props) => {
     );   
   }  
 };
-
-export default EventVolunteerTable;

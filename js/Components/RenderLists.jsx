@@ -5,7 +5,7 @@ const tooltipBootStrap = (
   <Tooltip id="tooltip">Are you sure?</Tooltip>
 );  
 
-export const ListEvents = (props,handleRemoveEvent) => (
+export const ListEvents = (props,handleEvent) => (
   props
     .sort((currentEvent,nextEvent) =>
       currentEvent.name.split("")[0] > nextEvent.name.split("")[0]
@@ -18,7 +18,7 @@ export const ListEvents = (props,handleRemoveEvent) => (
         <td>{event.currentVolunteers.length + ' / ' + event.maxVolunteers}</td>
         <td>
         <OverlayTrigger placement="right" overlay={tooltipBootStrap}>
-          <Button bsStyle="danger" onClick={() => handleRemoveEvent(event._id)}>Delete</Button>
+          <Button bsStyle="danger" onClick={() => handleEvent(event._id)}>Delete</Button>
         </OverlayTrigger>
         </td>
       </tr>  
