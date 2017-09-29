@@ -13,13 +13,12 @@ class VolunteerSummary extends React.Component {
 
   handleLogout(e) {
     //reset who is logged in, due to user logging out
-    localStorage.setItem('email','');
+    localStorage.setItem('email', '');
   }
 
   handleJoinEvent(eventId, eventName) {
-    if(localStorage.getItem('email') !== '') {
-      const userInfo = this.props.volunteers
-        .filter((volunteer) => volunteer.email === localStorage.getItem('email'))[0]; 
+    if (localStorage.getItem('email') !== '') {
+      const userInfo = this.props.volunteers.filter(volunteer => volunteer.email === localStorage.getItem('email'))[0];
       const user = {
         eventId: eventId,
         userId: userInfo._id,
@@ -28,7 +27,7 @@ class VolunteerSummary extends React.Component {
         email: localStorage.getItem('email')
       };
 
-      this.props.joinEvent(user);             
+      this.props.joinEvent(user);
     }
   }
 
@@ -36,13 +35,13 @@ class VolunteerSummary extends React.Component {
     const errorLogin = null;
     const listEvents = this.props.events.map((event, index) =>
       <tr key={event._id}>
-        <td>{index + 1}</td>        
+        <td>{index + 1}</td>
         <td>{event.name}</td>
-        <td>{event.date}</td>  
-        <td>{event.currentVolunteers.length + ' / ' + event.maxVolunteers}</td>    
+        <td>{event.date}</td>
+        <td>{event.currentVolunteers.length + ' / ' + event.maxVolunteers}</td>
         <Button
-          style={{margin: '10px'}} 
-          bsSize="xsmall" 
+          style={{ margin: '10px' }}
+          bsSize="xsmall"
           bsStyle="success"
           onClick={() => this.handleJoinEvent(event._id, event.name)}
         >
@@ -52,42 +51,44 @@ class VolunteerSummary extends React.Component {
     );
 
     const accountInfo = this.props.volunteers
-      .filter((volunteer) => {
+      .filter(volunteer => {
         return volunteer.email === localStorage.getItem('email');
-      }).map((volunteer) =>
+      })
+      .map(volunteer =>
         <div key={volunteer._id}>
-         {'Name: ' +  volunteer.name + ' Age: ' + volunteer.age + '\n' +
-         'Events Attended: ' + volunteer.eventsJoined}
+          {'Name: ' + volunteer.name + ' Age: ' + volunteer.age + '\n' + 'Events Attended: ' + volunteer.eventsJoined}
         </div>
-    );
+      );
 
-    const barData = this.props.events.map((event) => ({ name: event.name, joined: event.currentVolunteers.length } ));
-    return(      
-      <div>       
-        <Button style={{float:'right', margin:'10px'}} bsStyle="info" onClick={()=> this.handleLogout}>Logout</Button>
-        <div className="volunteerInfo">
+    const barData = this.props.events.map(event => ({ name: event.name, joined: event.currentVolunteers.length }));
+    return (
+      <div>
+        <Button style={{ float: 'right', margin: '10px' }} bsStyle="info" onClick={() => this.handleLogout}>
+          Logout
+        </Button>
+        <div style={{ marginLeft: '5%' }} className="volunteerInfo">
           <h3>Your Account Info: </h3>
           <div>{accountInfo}</div>
-          <p style={{color:'red'}}>{localStorage.getItem('email') === '' ? 'No User Logged in.': ''}</p>
+          <p style={{ color: 'red' }}>{localStorage.getItem('email') === '' ? 'No User Logged in.' : ''}</p>
         </div>
-        <Leaderboard barData={barData} /> 
+        <Leaderboard barData={barData} />
         <div className="eventTable">
           <h3>Volunteering Events:</h3>
-          <JoinTable tableType={'Event'} data={{action: 'Join Event', tableData: listEvents}} />
+          <JoinTable tableType={'Event'} data={{ action: 'Join Event', tableData: listEvents }} />
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    events:state.events,
+    events: state.events,
     volunteers: state.volunteers
-  }
-}
+  };
+};
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   joinEvent(VolunteerInfo) {
     dispatch(joinEvent(VolunteerInfo));
   }
