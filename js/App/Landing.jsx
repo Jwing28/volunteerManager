@@ -1,24 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import NavigationBar from '../Components/NavigationBar';
+import Footer from '../Components/Footer';
 
 const Landing = () =>
-  <div style={LandingStyles.container}>
-    <div style={LandingStyles.containerChildren}>
-      Volunteer Management Services
-      <hr />
+  <div>
+    <NavigationBar />
+    <div style={LandingStyles.container}>
+      <div style={LandingStyles.containerChildren}>
+        Volunteer Management Services
+        <hr />
+      </div>
+      <div>
+        <button style={LandingStyles.containerChildren}>
+          <Link to="/admin">
+            Administrators
+          </Link>
+        </button>
+        <button style={LandingStyles.containerChildren}>
+          <Link to="/volunteer">
+            Volunteers
+          </Link>
+        </button>
+      </div>
     </div>
-    <div>
-      <button style={LandingStyles.containerChildren}>
-        <Link to="/admin">
-          Administrators
-        </Link>
-      </button>
-      <button style={LandingStyles.containerChildren}>
-        <Link to="/volunteer">
-          Volunteers
-        </Link>
-      </button>
-    </div>
+    <Footer />
   </div>;
 
 const LandingStyles = {
@@ -39,9 +45,5 @@ const LandingStyles = {
     margin: '5px'
   }
 };
-
-// position: relative;
-// top: 50%;
-// -webkit-transform: translateY(50%);
 
 export default Landing;
