@@ -39,7 +39,7 @@ const LandingStyles = {
     fontSize: '1.5em',
     position: 'relative',
     top: '50%',
-    webkitTransform: 'translateY(150%)'
+    WebkitTransform: 'translateY(150%)'
   },
   containerChildren: {
     margin: '5px'
