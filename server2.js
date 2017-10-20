@@ -31,7 +31,6 @@ MongoClient.connect(connectionString, function(err, db) {
 
 app.get('/events', function(req, res) {
   MongoClient.connect(connectionString, function(err, db) {
-
     console.log('Connected correctly to server');
     if (err) {
       console.log('error in connecting at get events:', err);
@@ -41,9 +40,8 @@ app.get('/events', function(req, res) {
 
     collection.find().toArray(function(err, events) {
       if (err) {
-        console.log('error in getting the event documents', err);
+        console.log('error in retrieving events', err);
       }
-
       res.send(events);
     });
     db.close();
@@ -59,6 +57,9 @@ app.get('/volunteers', function(req, res) {
 
     var collection = db.collection('volunteers');
     collection.find().toArray(function(err, volunteers) {
+      if (err) {
+        console.log('error in retrieving volunteers');
+      }
       res.send(volunteers);
     });
     db.close();
@@ -85,7 +86,7 @@ app.post('/events', function(req, res) {
         console.log('New Event Saved to MongoDb');
         res.send('New Event Added.');
       });
-      db.close();
+    db.close();
   });
 });
 
@@ -110,7 +111,7 @@ app.post('/register', function(req, res) {
         console.log('New Event Saved to MongoDb');
         res.send('New Event Added.');
       });
-      db.close();
+    db.close();
   });
 });
 
@@ -131,7 +132,7 @@ app.put('/events/joinEvent', function(req, res) {
         console.log('User added to Event', result);
         res.send('User joined event.');
       });
-      db.close();
+    db.close();
   });
 });
 
@@ -155,7 +156,7 @@ app.put('/volunteers/joinEvent', function(req, res) {
         console.log('Event added to User', result);
         res.send('Event added to User.');
       });
-      db.close();
+    db.close();
   });
 });
 
@@ -175,7 +176,7 @@ app.delete('/events/:id', function(req, res) {
         console.log('Event removed from MongoDb', result);
         res.send('Event Removed.');
       });
-      db.close();
+    db.close();
   });
 });
 
@@ -195,7 +196,7 @@ app.delete('/volunteers/:id', function(req, res) {
         console.log('Volunteer removed from MongoDb', result);
         res.send('Volunteer Removed.');
       });
-      db.close();
+    db.close();
   });
 });
 
