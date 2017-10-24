@@ -92,7 +92,7 @@ class Register extends React.Component {
           />
         </label>
         <input style={formStyles.button} type="submit" value="Register" />
-        <CheckUser userInfo={this.state} />
+        <CheckUserRegistration userInfo={this.state} />
       </form>
     );
   }
@@ -123,7 +123,7 @@ const formStyles = {
 };
 
 //need to have case to notify user they have successfully registered
-const CheckUser = props => {
+export const CheckUserRegistration = props => {
   const validUser = props.userInfo.valid;
 
   if (!validUser) {
