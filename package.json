@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server",
-    "test":"mocha --compilers js:babel-core/register tests/*.js"
+    "test": "mocha --compilers js:babel-core/register tests/*.js"
   },
   "dependencies": {
     "axios": "^0.16.2",
@@ -40,11 +40,12 @@
     "chai-http": "^3.0.0",
     "dotenv": "^4.0.0",
     "enzyme": "^3.1.0",
+    "enzyme-adapter-react-15": "^1.0.2",
     "mocha": "^4.0.1"
   },
   "babel": {
     "presets": [
       "es2015"
     ]
-  }  
+  }
 }

@@ -66,7 +66,7 @@ class Login extends React.Component {
           />
         </label>
         <input style={formStyles.button} type="submit" value="Login" />
-        <CheckUser userInfo={this.state} />
+        <CheckUserLogin userInfo={this.state} />
       </form>
     );
   }
@@ -96,7 +96,7 @@ const formStyles = {
   }
 };
 
-const CheckUser = props => {
+export const CheckUserLogin = props => {
   const validUser = props.userInfo.valid;
 
   if (validUser) {
