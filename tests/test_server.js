@@ -14,6 +14,7 @@ chai.use(chaiHttp);
 
 import { CheckUserLogin } from '../js/Users/Volunteers/Login';
 import { CheckUserRegistration } from '../js/Users/Volunteers/Register';
+import { ListEvents, ListVolunteers } from '../js/Components/RenderLists';
 
 //chai uses old version of should = have to assert existance of something before testing it
 describe('GET requests', function() {
@@ -57,5 +58,42 @@ describe('<Register />', () => {
     expect(shallow(<CheckUserRegistration userInfo={{ name: 'Joe Johnson', valid: true }} />).text()).to.equal(
       'Sorry, Joe Johnson, user already exists. Please login as existing user or retry registering.'
     );
+  });
+});
+
+describe('<ListEvents />', () => {
+  it('should render a list of events', () => {
+    expect(
+      ListEvents([{ name: '5k Run', date: '10/27/17', currentVolunteers: [], maxVolunteers: [] }], function event() {
+        return 'testing event list';
+      })
+    ).to.have.lengthOf(1);
+  });
+  it('should return null with no events', () => {
+    expect(
+      ListEvents([], function event() {
+        return 'testing event list';
+      })
+    ).to.equal(null);
+  });
+});
+
+describe('<ListVolunteers />', () => {
+  it('should render a list of volunteers', () => {
+    expect(
+      ListVolunteers(
+        { data: [{ name: 'Joe Johnson', email: 'jj@gmail.com', age: 33, eventsJoined: [] }] },
+        function event() {
+          return 'testing volunteer list';
+        }
+      )
+    ).to.not.equal(null);
+  });
+  it('should return null with no volunteers', () => {
+    expect(
+      ListVolunteers({ data: [] }, function event() {
+        return 'testing volunteer list';
+      })
+    ).to.equal(null);
   });
 });
