@@ -6,6 +6,10 @@ const MongoClient = require('mongodb').MongoClient;
 require('dotenv').config();
 const connectionString = process.env.DB_TYPE + process.env.DB_USER + ':' + process.env.DB_PSW + process.env.DB_PATH;
 
+const Event = require('./models/event');
+const Volunteer = require('./models/volunteer');
+const mongoose = require('mongoose');
+
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, HEAD, OPTIONS');
@@ -15,36 +19,36 @@ app.use(function(req, res, next) {
 
 app.use(bodyParser.json());
 
-MongoClient.connect(connectionString, function(err, db) {
-  console.log('Initial connection to server successful.');
+var options = {
+  useMongoClient: true,
+  autoIndex: false, // Don't build indexes
+  reconnectTries: 10, // Never stop trying to reconnect
+  reconnectInterval: 500, // Reconnect every 500ms
+  poolSize: 10, // Maintain up to 10 socket connections
+  // If not connected, return errors immediately rather than waiting for reconnect
+  bufferMaxEntries: 0
+};
+
+mongoose.connect(connectionString, options);
+
+Event.find({}, function(err, events) {
+  console.log('is this running');
   if (err) {
-    console.log('error occurred:', err);
+    console.log('error: ', err);
   }
-
-  var collection = db.collection('events');
-
-  collection.find().toArray(function(err, docs) {
-    console.log('testing auth access', docs);
-  });
-  db.close();
+  // test connection
+  console.log('All Events', events);
 });
 
 app.get('/events', function(req, res) {
-  MongoClient.connect(connectionString, function(err, db) {
-    console.log('Connected correctly to server');
+  Event.find({}, function(err, events) {
     if (err) {
-      console.log('error in connecting at get events:', err);
+      console.log('error: ', err);
     }
 
-    var collection = db.collection('events');
-
-    collection.find().toArray(function(err, events) {
-      if (err) {
-        console.log('error in retrieving events', err);
-      }
-      res.send(events);
-    });
-    db.close();
+    // object of all the users
+    console.log('All Events', events);
+    res.send(events);
   });
 });
 
@@ -67,26 +71,20 @@ app.get('/volunteers', function(req, res) {
 });
 
 app.post('/events', function(req, res) {
-  console.log('req.body: ', req.body);
-  MongoClient.connect(connectionString, function(err, db) {
-    console.log('Connected correctly to server');
-    if (err) {
-      console.log('error occurred:', err);
-    }
-    console.log('post request data', req);
-    var collection = db.collection('events');
-    collection
-      .insertOne({
-        name: req.body.name,
-        date: req.body.date,
-        currentVolunteers: req.body.currentVolunteers,
-        maxVolunteers: req.body.maxVolunteers
-      })
-      .then(function(result) {
-        console.log('New Event Saved to MongoDb');
-        res.send('New Event Added.');
-      });
-    db.close();
+  // create a new user
+  var newEvent = Event({
+    name: req.body.name,
+    date: req.body.date,
+    currentVolunteers: req.body.currentVolunteers,
+    maxVolunteers: req.body.maxVolunteers
+  });
+
+  // save the user
+  newEvent.save(function(err) {
+    if (err) throw err;
+
+    console.log('Event created!');
+    res.send('New Event Added');
   });
 });
 
@@ -181,22 +179,31 @@ app.delete('/events/:id', function(req, res) {
 });
 
 app.delete('/volunteers/:id', function(req, res) {
-  MongoClient.connect(connectionString, function(err, db) {
-    console.log('Connected correctly to server');
-    if (err) {
-      console.log('error occurred:', err);
-    }
+  // MongoClient.connect(connectionString, function(err, db) {
+  //   console.log('Connected correctly to server');
+  //   if (err) {
+  //     console.log('error occurred:', err);
+  //   }
 
-    var collection = db.collection('volunteers');
-    collection
-      .deleteOne({
-        _id: ObjectID(req.params.id)
-      })
-      .then(function(result) {
-        console.log('Volunteer removed from MongoDb', result);
-        res.send('Volunteer Removed.');
-      });
-    db.close();
+  //   var collection = db.collection('volunteers');
+  //   collection
+  //     .deleteOne({
+  //       _id: ObjectID(req.params.id)
+  //     })
+  //     .then(function(result) {
+  //       console.log('Volunteer removed from MongoDb', result);
+  //       res.send('Volunteer Removed.');
+  //     });
+  //   db.close();
+  // });
+
+  // find the user with id
+  Volunteer.findByIdAndRemove(ObjectID(req.params.id), function(err) {
+    if (err) throw err;
+
+    // user deleted
+    console.log('User deleted!');
+    res.send('Volunteer Removed');
   });
 });
 
