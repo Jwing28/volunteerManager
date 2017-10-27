@@ -26,7 +26,6 @@ class AdminDashboard extends React.Component {
   }
 
   render() {
-    //render method comes before componentDidMount!
     const barData = this.props.volunteers.map(volunteer => ({ name: volunteer.name, joined: volunteer.eventsJoined }));
 
     if (!this.props.events.length || !this.props.volunteers.length) {
