@@ -43,5 +43,5 @@ export const ListVolunteers = props => {
       </td>
     </tr>
   );
-  return volunteerList.length;
+  return <tbody>{volunteerList}</tbody>;
 };

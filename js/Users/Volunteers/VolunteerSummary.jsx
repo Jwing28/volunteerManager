@@ -56,7 +56,7 @@ class VolunteerSummary extends React.Component {
       })
       .map(volunteer =>
         <div key={volunteer._id}>
-          {'Name: ' + volunteer.name + ' Age: ' + volunteer.age + '\n' + 'Events Attended: ' + volunteer.eventsJoined}
+          {'Name: ' + volunteer.name + ' Age: ' + volunteer.age + '\n' + 'Events Joined: ' + volunteer.eventsJoined}
         </div>
       );
 

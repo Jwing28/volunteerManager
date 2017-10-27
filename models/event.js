@@ -1,11 +1,14 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-var eventSchema = mongoose.Schema({
-  id:Number,
-  name:String,
-  date:Date,
-  signedUpVolunteers:Array,
-  maxVolunteers:Number
+var eventSchema = new Schema({
+  name: { type: String, required: true, unique: true },
+  date: Date,
+  currentVolunteers: [{ name: String, email: String, age: Number, eventsJoined: Number, futureEvents: Array }],
+  maxVolunteers: Number
 });
 
-var Event = module.exports = mongoose.model('event',eventSchema);
+var Event = mongoose.model('events', eventSchema);
+module.exports = Event;
+
+
