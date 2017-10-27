@@ -31,47 +31,30 @@ var options = {
 
 mongoose.connect(connectionString, options);
 
-Event.find({}, function(err, events) {
-  console.log('is this running');
-  if (err) {
-    console.log('error: ', err);
-  }
-  // test connection
-  console.log('All Events', events);
-});
-
 app.get('/events', function(req, res) {
   Event.find({}, function(err, events) {
     if (err) {
       console.log('error: ', err);
     }
 
-    // object of all the users
-    console.log('All Events', events);
+    console.log('All events', events);
     res.send(events);
   });
 });
 
 app.get('/volunteers', function(req, res) {
-  MongoClient.connect(connectionString, function(err, db) {
-    console.log('Connected correctly to server');
+  Volunteer.find({}, function(err, volunteers) {
     if (err) {
-      console.log('error occurred:', err);
+      console.log('error: ', err);
     }
 
-    var collection = db.collection('volunteers');
-    collection.find().toArray(function(err, volunteers) {
-      if (err) {
-        console.log('error in retrieving volunteers');
-      }
-      res.send(volunteers);
-    });
-    db.close();
+    // object of all the users
+    console.log('All volunteers', volunteers);
+    res.send(volunteers);
   });
 });
-
+// create a new user
 app.post('/events', function(req, res) {
-  // create a new user
   var newEvent = Event({
     name: req.body.name,
     date: req.body.date,
@@ -79,7 +62,6 @@ app.post('/events', function(req, res) {
     maxVolunteers: req.body.maxVolunteers
   });
 
-  // save the user
   newEvent.save(function(err) {
     if (err) throw err;
 
@@ -90,113 +72,60 @@ app.post('/events', function(req, res) {
 
 //creates new volunteer
 app.post('/register', function(req, res) {
-  MongoClient.connect(connectionString, function(err, db) {
-    console.log('Connected correctly to server');
-    if (err) {
-      console.log('error occurred:', err);
-    }
-    console.log('post data - register', req);
-    var collection = db.collection('volunteers');
-    collection
-      .insertOne({
-        name: req.body.name,
-        email: req.body.email,
-        age: req.body.age,
-        eventsJoined: 0,
-        futureEvents: []
-      })
-      .then(function(result) {
-        console.log('New Event Saved to MongoDb');
-        res.send('New Event Added.');
-      });
-    db.close();
+  var newVolunteer = Volunteer({
+    name: req.body.name,
+    email: req.body.email,
+    age: req.body.age,
+    eventsJoined: 0,
+    futureEvents: []
+  });
+
+  // save the user
+  newVolunteer.save(function(err) {
+    if (err) throw err;
+
+    console.log('Volunteer created!');
+    res.send('New Volunteer Added');
   });
 });
-
+//find event & push volunteer into event's array
 app.put('/events/joinEvent', function(req, res) {
-  MongoClient.connect(connectionString, function(err, db) {
-    console.log('Connected correctly to server');
-    if (err) {
-      console.log('error occurred:', err);
-    }
+  var eventObj = { name: req.body.eventName };
+  var userJoinEvent = { $push: { currentVolunteers: { name: req.body.username, email: req.body.email } } };
 
-    var collection = db.collection('events');
-    collection
-      .update(
-        { name: req.body.eventName },
-        { $push: { currentVolunteers: { name: req.body.username, email: req.body.email } } }
-      )
-      .then(function(result) {
-        console.log('User added to Event', result);
-        res.send('User joined event.');
-      });
-    db.close();
+  Event.findOneAndUpdate(eventObj, userJoinEvent, function(err, user) {
+    if (err) throw err;
+
+    console.log('User added to event list', user);
+    res.send('User joined event.');
   });
 });
-
+//find user & push event into user's array
 app.put('/volunteers/joinEvent', function(req, res) {
-  MongoClient.connect(connectionString, function(err, db) {
-    console.log('Connected correctly to server');
-    if (err) {
-      console.log('error occurred:', err);
-    }
+  var userObj = { name: req.body.username };
+  var addEventToUser = { $push: { futureEvents: { name: req.body.eventName } } };
+  var incrementEventsJoined = { $inc: { eventsJoined: 1 } };
 
-    var collection = db.collection('volunteers');
-    collection
-      .update(
-        { name: req.body.username },
-        {
-          $inc: { eventsJoined: 1 },
-          $push: { futureEvents: { name: req.body.eventName } }
-        }
-      )
-      .then(function(result) {
-        console.log('Event added to User', result);
-        res.send('Event added to User.');
-      });
-    db.close();
+  Volunteer.findOneAndUpdate(userObj, addEventToUser, incrementEventsJoined, function(err, volunteer) {
+    if (err) throw err;
+
+    console.log('Event added to user list', volunteer);
+    res.send('Event added to User.');
   });
 });
 
 app.delete('/events/:id', function(req, res) {
-  MongoClient.connect(connectionString, function(err, db) {
-    console.log('Connected correctly to server');
-    if (err) {
-      console.log('error occurred:', err);
-    }
+  // find the event with id
+  Event.findByIdAndRemove(ObjectID(req.params.id), function(err) {
+    if (err) throw err;
 
-    var collection = db.collection('events');
-    collection
-      .deleteOne({
-        _id: ObjectID(req.params.id)
-      })
-      .then(function(result) {
-        console.log('Event removed from MongoDb', result);
-        res.send('Event Removed.');
-      });
-    db.close();
+    // user deleted
+    console.log('Event deleted!');
+    res.send('Event Removed');
   });
 });
 
 app.delete('/volunteers/:id', function(req, res) {
-  // MongoClient.connect(connectionString, function(err, db) {
-  //   console.log('Connected correctly to server');
-  //   if (err) {
-  //     console.log('error occurred:', err);
-  //   }
-
-  //   var collection = db.collection('volunteers');
-  //   collection
-  //     .deleteOne({
-  //       _id: ObjectID(req.params.id)
-  //     })
-  //     .then(function(result) {
-  //       console.log('Volunteer removed from MongoDb', result);
-  //       res.send('Volunteer Removed.');
-  //     });
-  //   db.close();
-  // });
-
   // find the user with id
   Volunteer.findByIdAndRemove(ObjectID(req.params.id), function(err) {
     if (err) throw err;
