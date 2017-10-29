@@ -13,8 +13,8 @@ module.exports = {
   entry: './js/App/Index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'index_bundle.js',
-    publicPath:'/'
+    filename: 'bundle.js',
+    publicPath: '/'
   },
   resolve: {
     extensions: ['.js', '.jsx']
@@ -25,8 +25,8 @@ module.exports = {
       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ }
     ]
   },
-  devServer:{
-    historyApiFallback: true,
+  devServer: {
+    historyApiFallback: true
   },
   plugins: [HtmlWebpackPluginConfig]
 };
