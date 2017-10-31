@@ -27,23 +27,13 @@ module.exports = {
   devServer: {
     historyApiFallback: true
   },
+  watch: true,
   plugins: [
     HtmlWebpackPluginConfig,
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development'),
-      'process.env.API_HOST': JSON.stringify('http://localhost:3000'),
-      'process.env.TWO': JSON.stringify('it works')
+      'process.env.API_HOST': JSON.stringify('http://localhost:3000')
     })
   ]
 };
-
-// plugins: [
-//   HtmlWebpackPluginConfig,
-//   new webpack.HotModuleReplacementPlugin(),
-//   new webpack.NoEmitOnErrorsPlugin(),
-//   new webpack.DefinePlugin({
-//     'process.env.NODE_ENV': JSON.stringify('development'),
-//     'process.env.API_HOST': JSON.stringify('http://localhost:3000')
-//   })
-// ]
