@@ -21,7 +21,8 @@ describe('GET requests', function() {
   it('should retrieve all events', function(done) {
     chai.request('http://localhost:3000').get('/events').end(function(err, res) {
       should.exist(res.body);
-      res.body.should.be.a('array');
+      console.log('resbody', res.body);
+      expect(Array.isArray(res.body)).to.equal(true);
       done();
     });
   });
@@ -29,7 +30,7 @@ describe('GET requests', function() {
   it('should retrieve all volunteers', function(done) {
     chai.request('http://localhost:3000').get('/volunteers').end(function(err, res) {
       should.exist(res.body);
-      res.body.should.be.a('array');
+      expect(Array.isArray(res.body)).to.equal(true);
       done();
     });
   });

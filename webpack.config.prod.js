@@ -11,9 +11,10 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/'
   },
-
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   plugins: [
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       minimize: true,
       compress: {
@@ -33,4 +34,3 @@ module.exports = {
     ]
   }
 };
-
