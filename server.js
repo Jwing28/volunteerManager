@@ -5,6 +5,8 @@ const ObjectID = require('mongodb').ObjectID;
 const MongoClient = require('mongodb').MongoClient;
 require('dotenv').config();
 const connectionString = process.env.DB_TYPE + process.env.DB_USER + ':' + process.env.DB_PSW + process.env.DB_PATH;
+const prodConnectionString =
+  process.env.DB_TYPE + process.env.DB_USER + ':' + process.env.DB_PSW + process.env.MONGODB_URI;
 
 const Event = require('./models/event');
 const Volunteer = require('./models/volunteer');
@@ -29,7 +31,7 @@ var options = {
   bufferMaxEntries: 0
 };
 
-mongoose.connect(connectionString, options);
+mongoose.connect(prodConnectionString || connectionString, options);
 
 app.get('/events', function(req, res) {
   Event.find({}, function(err, events) {
@@ -48,7 +50,6 @@ app.get('/volunteers', function(req, res) {
       console.log('error: ', err);
     }
 
-    // object of all the users
     console.log('All volunteers', volunteers);
     res.send(volunteers);
   });
@@ -119,7 +120,6 @@ app.delete('/events/:id', function(req, res) {
   Event.findByIdAndRemove(ObjectID(req.params.id), function(err) {
     if (err) throw err;
 
-    // user deleted
     console.log('Event deleted!');
     res.send('Event Removed');
   });
@@ -130,12 +130,11 @@ app.delete('/volunteers/:id', function(req, res) {
   Volunteer.findByIdAndRemove(ObjectID(req.params.id), function(err) {
     if (err) throw err;
 
-    // user deleted
     console.log('User deleted!');
     res.send('Volunteer Removed');
   });
 });
 
 app.listen(process.env.DB_PORT, function() {
-  console.log('listening on 3000');
+  console.log(`Listening on port ${process.env.DB_PORT}`);
 });

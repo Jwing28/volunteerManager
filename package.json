@@ -4,12 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --inline --hot",
+    "start": "node server.js",
+    "dev": "webpack-dev-server --inline --hot",
     "test": "mocha --compilers js:babel-core/register tests/*.js",
     "clean-public": "npm run remove-public && mkdir public",
     "remove-public": "node_modules/.bin/rimraf ./public",
     "build:html": "babel-node tools/buildHtml.js",
-    "prebuild": "npm-run-all clean-public lint build:html",
+    "prebuild": "npm-run-all clean-public build:html",
     "build": "babel-node tools/build.js",
     "postbuild": "babel-node tools/publicServer.js"
   },
@@ -41,7 +42,7 @@
     "webpack-dev-server": "^2.5.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
