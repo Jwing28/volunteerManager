@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node server.js --exec babel-node --presets es2015,stage-2",
+    "start": "node server.js --exec --presets es2015,stage-2",
     "dev": "webpack-dev-server --inline --hot",
     "test": "mocha --compilers js:babel-core/register tests/*.js",
     "clean-public": "npm run remove-public && mkdir public",
